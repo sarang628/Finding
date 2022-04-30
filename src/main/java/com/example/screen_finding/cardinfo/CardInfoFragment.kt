@@ -4,16 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.example.screen_finding.R
 import com.example.screen_finding.databinding.FragmentViewPagerBinding
 import com.example.torang_core.navigation.RestaurantDetailNavigation
 import com.example.torang_core.util.EventObserver
 import com.example.torang_core.util.Logger
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -24,10 +32,7 @@ import javax.inject.Inject
 class CardInfoFragment : Fragment() {
     var previousState: Int = 0
     var userScrollChange: Boolean = false
-    private val mViewModel: CardInfoViewModel by viewModels()
-
-    /** 공유 뷰모델 */
-    //private val mapSharedViewModel: MapSharedViewModel by activityViewModels()
+    private val viewModel: CardInfoViewModel by viewModels()
 
     /** 카드정보 뷰페이저 아답터 */
     private lateinit var adapter: CardInfoVp2Adt
@@ -41,7 +46,7 @@ class CardInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // 페이지 아답터 초기화
-        adapter = CardInfoVp2Adt(mViewModel, viewLifecycleOwner)
+        adapter = CardInfoVp2Adt(viewModel, viewLifecycleOwner)
 
         // 바인딩 초기화
         val binding = FragmentViewPagerBinding.inflate(layoutInflater, container, false)
@@ -63,7 +68,7 @@ class CardInfoFragment : Fragment() {
                         //mapSharedViewModel.selectPosition(position)
                         Logger.v("userScrollChange : $userScrollChange")
                         //if (userScrollChange)
-                            //mapSharedViewModel.selectPosition(position)
+                        //mapSharedViewModel.selectPosition(position)
                     }
 
                     override fun onPageScrollStateChanged(state: Int) {
@@ -103,24 +108,39 @@ class CardInfoFragment : Fragment() {
         /*mapSharedViewModel.restaurants.observe(viewLifecycleOwner, {
             adapter.setRestaurants(it)
         })*/
-        /*mapSharedViewModel.isExpended.observe(viewLifecycleOwner) {
 
-            val animation = AnimationUtils.loadAnimation(
-                context, if (it) R.anim.slide_card_up else R.anim.slide_card_down
-            )
-            binding.vp.startAnimation(animation)
-            animation.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation) {
-                    if (!it) binding.vp.visibility = View.VISIBLE
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.restaurants.collect {
+                    Logger.d(it)
+                    adapter.setRestaurants(it)
                 }
+            }
+        }
 
-                override fun onAnimationEnd(animation: Animation) {
-                    if (it) binding.vp.visibility = View.INVISIBLE
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.clickMap.collect {
+                    Logger.d(it.toString())
+                    val animation = AnimationUtils.loadAnimation(
+                        context, if (it) R.anim.slide_card_up else R.anim.slide_card_down
+                    )
+                    binding.vp.startAnimation(animation)
+                    animation.setAnimationListener(object : Animation.AnimationListener {
+                        override fun onAnimationStart(animation: Animation) {
+                            if (!it) binding.vp.visibility = View.VISIBLE
+                        }
+
+                        override fun onAnimationEnd(animation: Animation) {
+                            if (it) binding.vp.visibility = View.INVISIBLE
+                        }
+
+                        override fun onAnimationRepeat(animation: Animation) {}
+                    })
                 }
-
-                override fun onAnimationRepeat(animation: Animation) {}
-            })
-        }*/
+            }
+        }
 
         /*mapSharedViewModel.currentRestaurantPosition.observe(viewLifecycleOwner, {
             it?.let {
@@ -132,7 +152,7 @@ class CardInfoFragment : Fragment() {
             }
         })*/
 
-        mViewModel.clickCardInfo.observe(viewLifecycleOwner, EventObserver {
+        viewModel.clickCardInfo.observe(viewLifecycleOwner, EventObserver {
             val mode = requireActivity().intent.getIntExtra("mode", 0)
             Logger.d("click restaurant $it")
             if (mode == 0) {

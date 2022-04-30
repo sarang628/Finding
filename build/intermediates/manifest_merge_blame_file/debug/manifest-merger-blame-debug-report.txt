@@ -4,18 +4,18 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="21"
-6-->/Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
+6-->/Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
 7        android:targetSdkVersion="30" />
-7-->/Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
+7-->/Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
 8
 9    <application>
-9-->/Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:5:5-9:19
+9-->/Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:5:5-9:19
 10        <activity
-10-->/Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:6:9-8:39
+10-->/Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:6:9-8:39
 11            android:name="com.example.screen_finding.FindingTestActivity"
-11-->/Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:7:13-48
+11-->/Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:7:13-48
 12            android:exported="true" />
-12-->/Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:8:13-36
+12-->/Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:8:13-36
 13    </application>
 14
 15</manifest>

@@ -7,7 +7,7 @@
 
         <variable
             name="restaurant"
-            type="com.example.torang_core.data.model.RestaurantData" />
+            type="com.example.torang_core.data.model.Restaurant" />
 
         <variable
             name="cardInfoViewModel"
@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@{restaurant.restaurant_type}"
+                    android:text="@{restaurant.restaurant_type.name()}"
                     android:textColor="@android:color/white"
                     app:layout_constraintBaseline_toBaselineOf="@+id/textView6"
                     app:layout_constraintStart_toEndOf="@+id/textView6" />
@@ -118,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@{restaurant.prices}"
+                    android:text="@{restaurant.prices.name()}"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
                     app:layout_constraintBaseline_toBaselineOf="@+id/textView4"

@@ -1,33 +1,33 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:2:1-11:12
-INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:2:1-11:12
-INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:2:1-11:12
+ADDED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:2:1-11:12
+INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:2:1-11:12
+INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:2:1-11:12
 	package
-		ADDED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:3:5-41
-		INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
-		INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
+		ADDED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:3:5-41
+		INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
+		INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:2:11-69
+		ADDED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:5:5-9:19
+ADDED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:5:5-9:19
 activity#com.example.screen_finding.FindingTestActivity
-ADDED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:6:9-8:39
+ADDED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:6:9-8:39
 	android:exported
-		ADDED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:8:13-36
+		ADDED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:8:13-36
 	android:name
-		ADDED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml:7:13-48
+		ADDED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml:7:13-48
 uses-sdk
-INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
-INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
-INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
-INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
+INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
+INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
+INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
+INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
-		ADDED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
-		INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
+		INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
+		ADDED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
+		INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
-		ADDED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
-		INJECTED from /Users/sarangyang/AndroidStudioProjects/TorangAndroid/Screens/Finding/screen_finding/src/main/AndroidManifest.xml
+		INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
+		ADDED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml
+		INJECTED from /Users/sarangyang/AndroidStudioProjects/FindingScreenTestApp/Finding/src/main/AndroidManifest.xml

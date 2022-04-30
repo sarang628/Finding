@@ -4,13 +4,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.adapter.FragmentViewHolder
+import com.example.torang_core.data.model.Restaurant
 import com.example.torang_core.data.model.RestaurantData
 
 
 abstract class CardInfoVpAdt(fragment: Fragment) : FragmentStateAdapter(fragment) {
-    abstract fun clickRestaurant(restaurant: RestaurantData)
-    private var restaurants: List<RestaurantData> = ArrayList()
-    fun setRestaurants(restaurants: List<RestaurantData>) {
+    abstract fun clickRestaurant(restaurant: Restaurant)
+    private var restaurants: List<Restaurant> = ArrayList()
+    fun setRestaurants(restaurants: List<Restaurant>) {
         this.restaurants = restaurants
         notifyDataSetChanged()
     }

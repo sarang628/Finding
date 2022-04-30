@@ -82,7 +82,7 @@ public class FragmentTorangCardVpItemBindingImpl extends FragmentTorangCardVpIte
             setCardInfoViewModel((com.example.screen_finding.cardinfo.CardInfoViewModel) variable);
         }
         else if (BR.restaurant == variableId) {
-            setRestaurant((com.example.torang_core.data.model.RestaurantData) variable);
+            setRestaurant((com.example.torang_core.data.model.Restaurant) variable);
         }
         else {
             variableSet = false;
@@ -98,7 +98,7 @@ public class FragmentTorangCardVpItemBindingImpl extends FragmentTorangCardVpIte
         notifyPropertyChanged(BR.cardInfoViewModel);
         super.requestRebind();
     }
-    public void setRestaurant(@Nullable com.example.torang_core.data.model.RestaurantData Restaurant) {
+    public void setRestaurant(@Nullable com.example.torang_core.data.model.Restaurant Restaurant) {
         this.mRestaurant = Restaurant;
         synchronized(this) {
             mDirtyFlags |= 0x2L;
@@ -122,17 +122,18 @@ public class FragmentTorangCardVpItemBindingImpl extends FragmentTorangCardVpIte
             mDirtyFlags = 0;
         }
         java.lang.String stringValueOfRestaurantRating = null;
-        java.lang.String restaurantPrices = null;
+        com.example.torang_core.data.model.Prices restaurantPrices = null;
         java.lang.String restaurantRestaurantName = null;
-        java.lang.Float restaurantRating = null;
-        float androidxDatabindingViewDataBindingSafeUnboxRestaurantRating = 0f;
+        float restaurantRating = 0f;
         com.example.screen_finding.cardinfo.CardInfoViewModel cardInfoViewModel = mCardInfoViewModel;
         java.lang.String stringFormatJavaLangStringSStringValueOfRestaurantReviewCount = null;
+        java.lang.String restaurantRestaurantTypeName = null;
+        java.lang.String restaurantPricesName = null;
         java.lang.String stringValueOfRestaurantReviewCount = null;
-        com.example.torang_core.data.model.RestaurantData restaurant = mRestaurant;
+        com.example.torang_core.data.model.Restaurant restaurant = mRestaurant;
         java.lang.String restaurantImgUrl1 = null;
-        java.lang.String restaurantRestaurantType = null;
-        java.lang.String restaurantReviewCount = null;
+        com.example.torang_core.data.model.RestaurantType restaurantRestaurantType = null;
+        int restaurantReviewCount = 0;
 
         if ((dirtyFlags & 0x6L) != 0) {
 
@@ -154,14 +155,20 @@ public class FragmentTorangCardVpItemBindingImpl extends FragmentTorangCardVpIte
                 }
 
 
-                // read androidx.databinding.ViewDataBinding.safeUnbox(restaurant.rating)
-                androidxDatabindingViewDataBindingSafeUnboxRestaurantRating = androidx.databinding.ViewDataBinding.safeUnbox(restaurantRating);
+                if (restaurantPrices != null) {
+                    // read restaurant.prices.name()
+                    restaurantPricesName = restaurantPrices.name();
+                }
+                // read String.valueOf(restaurant.rating)
+                stringValueOfRestaurantRating = java.lang.String.valueOf(restaurantRating);
                 // read String.valueOf(restaurant.review_count)
                 stringValueOfRestaurantReviewCount = java.lang.String.valueOf(restaurantReviewCount);
+                if (restaurantRestaurantType != null) {
+                    // read restaurant.restaurant_type.name()
+                    restaurantRestaurantTypeName = restaurantRestaurantType.name();
+                }
 
 
-                // read String.valueOf(androidx.databinding.ViewDataBinding.safeUnbox(restaurant.rating))
-                stringValueOfRestaurantRating = java.lang.String.valueOf(androidxDatabindingViewDataBindingSafeUnboxRestaurantRating);
                 // read String.format("(%s)", String.valueOf(restaurant.review_count))
                 stringFormatJavaLangStringSStringValueOfRestaurantReviewCount = java.lang.String.format("(%s)", stringValueOfRestaurantReviewCount);
         }
@@ -175,12 +182,12 @@ public class FragmentTorangCardVpItemBindingImpl extends FragmentTorangCardVpIte
             // api target 1
 
             com.sarang.torangimageloader.ImageLoadBindingAdapter.loadImage(this.iv, restaurantImgUrl1);
-            androidx.databinding.adapters.RatingBarBindingAdapter.setRating(this.ratingBar, androidxDatabindingViewDataBindingSafeUnboxRestaurantRating);
+            androidx.databinding.adapters.RatingBarBindingAdapter.setRating(this.ratingBar, restaurantRating);
             androidx.databinding.adapters.TextViewBindingAdapter.setText(this.textView, restaurantRestaurantName);
             androidx.databinding.adapters.TextViewBindingAdapter.setText(this.textView2, stringFormatJavaLangStringSStringValueOfRestaurantReviewCount);
             androidx.databinding.adapters.TextViewBindingAdapter.setText(this.textView3, stringValueOfRestaurantRating);
-            androidx.databinding.adapters.TextViewBindingAdapter.setText(this.textView4, restaurantRestaurantType);
-            androidx.databinding.adapters.TextViewBindingAdapter.setText(this.textView5, restaurantPrices);
+            androidx.databinding.adapters.TextViewBindingAdapter.setText(this.textView4, restaurantRestaurantTypeName);
+            androidx.databinding.adapters.TextViewBindingAdapter.setText(this.textView5, restaurantPricesName);
         }
     }
     // Listener Stub Implementations
@@ -192,7 +199,7 @@ public class FragmentTorangCardVpItemBindingImpl extends FragmentTorangCardVpIte
         // cardInfoViewModel
         com.example.screen_finding.cardinfo.CardInfoViewModel cardInfoViewModel = mCardInfoViewModel;
         // restaurant
-        com.example.torang_core.data.model.RestaurantData restaurant = mRestaurant;
+        com.example.torang_core.data.model.Restaurant restaurant = mRestaurant;
 
 
 

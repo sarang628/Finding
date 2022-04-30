@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.screen_finding.databinding.FragmentTorangCardVpItemBinding
+import com.example.torang_core.data.model.Restaurant
 import com.example.torang_core.data.model.RestaurantData
 import com.example.torang_core.util.Logger
 
@@ -14,7 +15,7 @@ import com.example.torang_core.util.Logger
 class CardInfoVp2Adt(val cardInfoViewModel: CardInfoViewModel, val lifecycleOwner: LifecycleOwner) :
     RecyclerView.Adapter<CardInfoViewHolder>() {
 
-    private var restaurants: List<RestaurantData> = ArrayList()
+    private var restaurants: List<Restaurant> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardInfoViewHolder {
         return CardInfoViewHolder(
@@ -35,7 +36,7 @@ class CardInfoVp2Adt(val cardInfoViewModel: CardInfoViewModel, val lifecycleOwne
         return restaurants.size
     }
 
-    fun setRestaurants(it: List<RestaurantData>?) {
+    fun setRestaurants(it: List<Restaurant>?) {
         Logger.v("restaurant size = ${it?.size}")
         it?.let {
             restaurants = it
@@ -48,7 +49,7 @@ class CardInfoViewHolder(
     val binding: FragmentTorangCardVpItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun setData(restaurantData: RestaurantData) {
+    fun setData(restaurantData: Restaurant) {
         binding.restaurant = restaurantData
     }
 }

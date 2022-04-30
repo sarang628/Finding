@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.screen_finding.databinding.FragmentTorangCardVpItemBinding
+import com.example.torang_core.data.model.Restaurant
 import com.example.torang_core.data.model.RestaurantData
 
 /**
@@ -15,7 +16,7 @@ class CardInfoItem : Fragment() {
 
     var binding: FragmentTorangCardVpItemBinding? = null
 
-    private var restaurant: RestaurantData? = null
+    private var restaurant: Restaurant? = null
     private var onClickListener: View.OnClickListener? = null
     fun setOnClickListener(onClickListener: View.OnClickListener?) {
         this.onClickListener = onClickListener
@@ -41,7 +42,7 @@ class CardInfoItem : Fragment() {
         return binding!!.root
     }
 
-    fun setRestaurant(restaurant: RestaurantData?) {
+    fun setRestaurant(restaurant: Restaurant?) {
         this.restaurant = restaurant
     }
 

@@ -14,8 +14,6 @@ class FindingViewModel(
 ) : ViewModel() {
     private val isFocusSearchView = MutableLiveData<Boolean>()
 
-    private val isFindingRepository = findingRepository.getisFirstRequestLocation()
-
     fun setIsFocusSearchView(isFocusSearchView: Boolean) {
         this.isFocusSearchView.value = isFocusSearchView
     }
@@ -29,13 +27,13 @@ class FindingViewModel(
 
     fun requestLocation() {
         viewModelScope.launch {
-            findingRepository.requestLocation()
+
         }
     }
 
     fun onReceiveLocation() {
         viewModelScope.launch {
-            findingRepository.onReceiveLocation()
+
         }
     }
 }

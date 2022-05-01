@@ -38,6 +38,16 @@ class FindFragment : Fragment() {
                     val navController = findNavController()
                     navController.navigate(R.id.action_findFragment_to_searchFragment)
                 }
+
+                toggleBtn.setOnClickListener {
+                    if (toggleBtn.isExtended) {
+                        toggleBtn.shrink()
+                    } else {
+                        toggleBtn.text = "Loading"
+                        toggleBtn.extend()
+                    }
+                }
+
             }
 
         mapSharedViewModel.errorMsg.observe(viewLifecycleOwner) {

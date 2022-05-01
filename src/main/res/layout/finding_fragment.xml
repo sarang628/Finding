@@ -27,17 +27,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/toggle_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginRight="8dp"
             android:backgroundTint="@color/colorSecondaryLight"
-            android:src="@android:drawable/ic_menu_mylocation"
             android:visibility="visible"
             app:borderWidth="0dp"
             app:elevation="6dp"
+            app:icon="@android:drawable/ic_menu_mylocation"
             app:layout_constraintBottom_toTopOf="@+id/card_page_container"
             app:layout_constraintEnd_toEndOf="parent" />
 

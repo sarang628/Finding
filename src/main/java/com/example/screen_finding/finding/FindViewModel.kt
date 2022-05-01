@@ -13,6 +13,9 @@ class FindingViewModel(
     private val findingRepository: FindRepository
 ) : ViewModel() {
     private val isFocusSearchView = MutableLiveData<Boolean>()
+
+    private val isFindingRepository = findingRepository.getisFirstRequestLocation()
+
     fun setIsFocusSearchView(isFocusSearchView: Boolean) {
         this.isFocusSearchView.value = isFocusSearchView
     }
@@ -21,6 +24,18 @@ class FindingViewModel(
         viewModelScope.launch {
             Logger.d(keyword)
             searchRepository.saveHistory(keyword)
+        }
+    }
+
+    fun requestLocation() {
+        viewModelScope.launch {
+            findingRepository.requestLocation()
+        }
+    }
+
+    fun onReceiveLocation() {
+        viewModelScope.launch {
+            findingRepository.onReceiveLocation()
         }
     }
 }

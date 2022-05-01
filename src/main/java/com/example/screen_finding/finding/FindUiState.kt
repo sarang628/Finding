@@ -1,4 +1,5 @@
 package com.example.screen_finding.finding
 
-class FindUiState {
-}
+data class FindUiState(
+    val isRequestingLocation: Boolean = false
+)

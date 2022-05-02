@@ -60,6 +60,7 @@ class FindFragment : Fragment() {
                             Logger.d("stateUpdate : " + it)
                             changeStateButton(toggleBtn, it.isRequestingLocation)
                             if (!it.isFirstRequestLocation) {
+                                Logger.d("isFirstRequestLocation =  false")
                                 viewModel.requestLocation()
                                 requestLocation()
                             }
@@ -78,10 +79,7 @@ class FindFragment : Fragment() {
     }
 
     private fun requestLocation() {
-        runBlocking {
-            delay(3000)
-            viewModel.onReceiveLocation()
-        }
+        viewModel.requestLocation()
     }
 
     /**

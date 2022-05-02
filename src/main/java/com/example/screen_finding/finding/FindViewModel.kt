@@ -7,7 +7,6 @@ import com.example.torang_core.repository.FindRepository
 import com.example.torang_core.repository.SearchRepository
 import com.example.torang_core.util.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,18 +17,12 @@ class FindViewModel @Inject constructor(
     private val findingRepository: FindRepository
 ) : ViewModel() {
     private val isFocusSearchView = MutableLiveData<Boolean>()
-
     private val _uiState = MutableStateFlow(FindUiState())
     val uiState: StateFlow<FindUiState> = _uiState
 
-
-    fun setIsFocusSearchView(isFocusSearchView: Boolean) {
-        this.isFocusSearchView.value = isFocusSearchView
-    }
-
-
     init {
         viewModelScope.launch {
+            // 최초위치요청 상태 가져오기
             findingRepository.getIsFirstRequestLocation().collect { b ->
                 _uiState.update {
                     Logger.d("getIsFirstRequestLocation:" + b)
@@ -38,6 +31,7 @@ class FindViewModel @Inject constructor(
             }
         }
 
+        // 현재 위치를 요청중인지
         viewModelScope.launch {
             findingRepository.isRequestingLocation().collect { b ->
                 Logger.d("isRequestingLocation:" + b)
@@ -48,6 +42,20 @@ class FindViewModel @Inject constructor(
         }
     }
 
+    // 상태를 가져오고 뷰에서 위치 요청을 했다면 요청했다고 저장소에 알려주기
+    fun requestLocation() {
+        viewModelScope.launch {
+            findingRepository.notifyRequestLocation()
+        }
+    }
+
+    // 위치를 받아왔을때 알려줘야함
+    fun onReceiveLocation() {
+        viewModelScope.launch {
+            findingRepository.notifyReceiveLocation()
+        }
+    }
+
     fun search(keyword: String) {
         viewModelScope.launch {
             Logger.d(keyword)
@@ -55,17 +63,7 @@ class FindViewModel @Inject constructor(
         }
     }
 
-    fun requestLocation() {
-        viewModelScope.launch {
-            Logger.d("")
-            findingRepository.notifyRequestedLocation()
-        }
-    }
-
-    fun onReceiveLocation() {
-        viewModelScope.launch {
-            delay(3000)
-            findingRepository.onReceiveLocation()
-        }
+    fun setIsFocusSearchView(isFocusSearchView: Boolean) {
+        this.isFocusSearchView.value = isFocusSearchView
     }
 }

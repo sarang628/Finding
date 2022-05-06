@@ -3,9 +3,13 @@ package com.example.screen_finding.finding
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.torang_core.data.model.SearchType
+import com.example.torang_core.repository.FilterRepository
 import com.example.torang_core.repository.FindRepository
+import com.example.torang_core.repository.MapRepository
 import com.example.torang_core.repository.SearchRepository
 import com.example.torang_core.util.Logger
+import com.sryang.screen_filter.databinding.FragmentPriceFilterBindingImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -14,7 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class FindViewModel @Inject constructor(
     private val searchRepository: SearchRepository,
-    private val findingRepository: FindRepository
+    private val findingRepository: FindRepository,
+    private val filterRepository: FilterRepository,
+    private val mapRepository: MapRepository
 ) : ViewModel() {
     private val isFocusSearchView = MutableLiveData<Boolean>()
     private val _uiState = MutableStateFlow(FindUiState())
@@ -37,6 +43,26 @@ class FindViewModel @Inject constructor(
                 Logger.d("isRequestingLocation:" + b)
                 _uiState.update {
                     it.copy(isRequestingLocation = b)
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            findingRepository.getSearchBoundRestaurnatTrigger().collect {
+                Logger.d("getSearchBoundRestaurnatTrigger: $it")
+                if (it) {
+                    val filter = filterRepository.getFilter()
+                    findingRepository.searchRestaurant(
+                        distances = filter.distances,
+                        restaurantType = filter.restaurantTypes,
+                        prices = filter.prices,
+                        ratings = filter.ratings,
+                        northEastLatitude = mapRepository.getNorthEastLatitude(),
+                        northEastLongitude = mapRepository.getNorthEastLongitude(),
+                        southWestLatitude = mapRepository.getSouthWestLatitude(),
+                        southWestLongitude = mapRepository.getSouthWestLatitude(),
+                        searchType = SearchType.BOUND
+                    )
                 }
             }
         }

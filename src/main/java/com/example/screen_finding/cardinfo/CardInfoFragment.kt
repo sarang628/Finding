@@ -65,6 +65,7 @@ class CardInfoFragment : Fragment() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
                         Logger.d(position)
+                        viewModel.setCurrentPosition(position)
                         //mapSharedViewModel.selectPosition(position)
                         Logger.v("userScrollChange : $userScrollChange")
                         //if (userScrollChange)

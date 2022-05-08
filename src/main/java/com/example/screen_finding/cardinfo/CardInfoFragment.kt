@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.screen_finding.R
@@ -20,7 +19,6 @@ import com.example.torang_core.navigation.RestaurantDetailNavigation
 import com.example.torang_core.util.EventObserver
 import com.example.torang_core.util.Logger
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,16 +28,15 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class CardInfoFragment : Fragment() {
-    var previousState: Int = 0
-    var userScrollChange: Boolean = false
+    /** 카드 정보 뷰모델 */
     private val viewModel: CardInfoViewModel by viewModels()
 
     /** 카드정보 뷰페이저 아답터 */
     private lateinit var adapter: CardInfoVp2Adt
 
+    /** 맛집 상세화며 이동 네비게이션 */
     @Inject
     lateinit var restaurantDetailNavigation: RestaurantDetailNavigation
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,50 +49,17 @@ class CardInfoFragment : Fragment() {
         val binding = FragmentViewPagerBinding.inflate(layoutInflater, container, false)
             .apply {
                 lifecycleOwner = viewLifecycleOwner
-
                 // 뷰페이저 설정
                 vp.apply {
                     clipToPadding = false
                     setPageTransformer(MarginPageTransformer(50))
                     adapter = this@CardInfoFragment.adapter
                 }
-
                 // 뷰페이저 페이지 리스너 설정
-                vp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
-                        Logger.d(position)
-                        viewModel.setCurrentPosition(position)
-                        //mapSharedViewModel.selectPosition(position)
-                        Logger.v("userScrollChange : $userScrollChange")
-                        //if (userScrollChange)
-                        //mapSharedViewModel.selectPosition(position)
-                    }
-
-                    override fun onPageScrollStateChanged(state: Int) {
-                        super.onPageScrollStateChanged(state)
-                        if (previousState == ViewPager.SCROLL_STATE_DRAGGING && state == ViewPager.SCROLL_STATE_SETTLING)
-                            userScrollChange = true;
-                        else if (previousState == ViewPager.SCROLL_STATE_SETTLING && state == ViewPager.SCROLL_STATE_IDLE)
-                            userScrollChange = false;
-                        previousState = state;
-                    }
-
-                    override fun onPageScrolled(
-                        position: Int,
-                        positionOffset: Float,
-                        positionOffsetPixels: Int
-                    ) {
-                        super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                        if (position == 0 && positionOffsetPixels == 0) {
-
-                        } else {
-                            //mapSharedViewModel.isMoved = false
-                        }
-                    }
-                })
+                setPagerScrollListener(vp)
             }
 
+        //UI 구독
         subScribeUi(binding)
 
         return binding.root
@@ -105,63 +69,78 @@ class CardInfoFragment : Fragment() {
      * UI 구독
      */
     private fun subScribeUi(binding: FragmentViewPagerBinding) {
-        // 레스토랑 리스트 감지
-        /*mapSharedViewModel.restaurants.observe(viewLifecycleOwner, {
-            adapter.setRestaurants(it)
-        })*/
-
-
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.restaurants.collect {
-                    Logger.d(it)
-                    adapter.setRestaurants(it)
+                //UI 상태 정보
+                viewModel.uiState.collect {
+                    moveCardPosition(binding.vp, it.currentPosition)
+                    showCard(binding.vp, it.showCard)
+                    adapter.setRestaurants(it.restaurants)
                 }
             }
         }
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.clickMap.collect {
-                    Logger.d(it.toString())
-                    val animation = AnimationUtils.loadAnimation(
-                        context, if (it) R.anim.slide_card_up else R.anim.slide_card_down
-                    )
-                    binding.vp.startAnimation(animation)
-                    animation.setAnimationListener(object : Animation.AnimationListener {
-                        override fun onAnimationStart(animation: Animation) {
-                            if (!it) binding.vp.visibility = View.VISIBLE
-                        }
-
-                        override fun onAnimationEnd(animation: Animation) {
-                            if (it) binding.vp.visibility = View.INVISIBLE
-                        }
-
-                        override fun onAnimationRepeat(animation: Animation) {}
-                    })
-                }
-            }
-        }
-
-        /*mapSharedViewModel.currentRestaurantPosition.observe(viewLifecycleOwner, {
-            it?.let {
-                if (binding.vp.currentItem != it) {
-                    binding.vp.post {
-                        binding.vp.setCurrentItem(it, true)
-                    }
-                }
-            }
-        })*/
-
+        //카드 클릭 시 상세화며 이동
         viewModel.clickCardInfo.observe(viewLifecycleOwner, EventObserver {
             val mode = requireActivity().intent.getIntExtra("mode", 0)
             Logger.d("click restaurant $it")
             if (mode == 0) {
                 restaurantDetailNavigation.go(requireContext(), it.restaurant_id)
             } else {
-                //mapSharedViewModel.selectRestaurant(it)
                 requireActivity().onBackPressed()
             }
         })
+    }
+
+    /**
+     * 페이지 스크롤 시 이벤트 전달합니다.
+     */
+    private fun setPagerScrollListener(vp: ViewPager2) {
+        vp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.setCurrentPosition(position)
+            }
+        })
+    }
+
+    /**
+     * 카드 애니메이션으로 보여줍니다.
+     */
+    private fun showCard(view: View, showCard: Boolean) {
+        if (
+            (view.visibility == View.VISIBLE && !showCard)
+            || (view.visibility == View.INVISIBLE && showCard)
+        ) {
+            Logger.v("ignore showcard! : visibility = ${view.visibility} showCard =  $showCard")
+            return
+        }
+
+        val animation = AnimationUtils.loadAnimation(
+            context, if (showCard) R.anim.slide_card_up else R.anim.slide_card_down
+        )
+        view.startAnimation(animation)
+        animation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {
+                if (!showCard) view.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationEnd(animation: Animation) {
+                if (showCard) view.visibility = View.INVISIBLE
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {}
+        })
+    }
+
+    /**
+     * 카드 위치를 이동시킵니다.
+     */
+    private fun moveCardPosition(viewPater: ViewPager2, position: Int) {
+        if (viewPater.currentItem != position) {
+            viewPater.post {
+                viewPater.setCurrentItem(position, true)
+            }
+        }
     }
 }

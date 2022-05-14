@@ -60,7 +60,7 @@ class FindViewModel @Inject constructor(
                         northEastLatitude = mapRepository.getNorthEastLatitude(),
                         northEastLongitude = mapRepository.getNorthEastLongitude(),
                         southWestLatitude = mapRepository.getSouthWestLatitude(),
-                        southWestLongitude = mapRepository.getSouthWestLatitude(),
+                        southWestLongitude = mapRepository.getSouthWestLongitude(),
                         searchType = SearchType.BOUND
                     )
                 }

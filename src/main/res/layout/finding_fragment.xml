@@ -43,7 +43,7 @@
 
         <fragment
             android:id="@+id/card_page_container"
-            class="com.example.screen_finding.cardinfo.CardInfoFragment"
+            class="com.example.cardinfo.RestaurantInfoCardFragment"
             android:layout_width="0dp"
             android:layout_height="180dp"
             app:layout_constraintBottom_toBottomOf="parent"

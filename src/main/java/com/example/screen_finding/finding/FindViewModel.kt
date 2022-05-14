@@ -29,7 +29,7 @@ class FindViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             // 최초위치요청 상태 가져오기
-            findingRepository.getIsFirstRequestLocation().collect { b ->
+            findingRepository.getIsFirstRequestLocation().collectLatest { b ->
                 _uiState.update {
                     Logger.d("getIsFirstRequestLocation:" + b)
                     it.copy(isFirstRequestLocation = b)
@@ -39,7 +39,7 @@ class FindViewModel @Inject constructor(
 
         // 현재 위치를 요청중인지
         viewModelScope.launch {
-            findingRepository.isRequestingLocation().collect { b ->
+            findingRepository.isRequestingLocation().collectLatest { b ->
                 Logger.d("isRequestingLocation:" + b)
                 _uiState.update {
                     it.copy(isRequestingLocation = b)
@@ -48,7 +48,7 @@ class FindViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            findingRepository.getSearchBoundRestaurnatTrigger().collect {
+            findingRepository.getSearchBoundRestaurnatTrigger().collectLatest {
                 Logger.d("getSearchBoundRestaurnatTrigger: $it")
                 if (it) {
                     val filter = filterRepository.getFilter()

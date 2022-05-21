@@ -1,6 +1,6 @@
 package com.example.screen_finding.finding
 
-import androidx.lifecycle.MutableLiveData
+import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.torang_core.data.model.SearchType
@@ -9,9 +9,12 @@ import com.example.torang_core.repository.FindRepository
 import com.example.torang_core.repository.MapRepository
 import com.example.torang_core.repository.SearchRepository
 import com.example.torang_core.util.Logger
-import com.sryang.screen_filter.databinding.FragmentPriceFilterBindingImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,34 +25,28 @@ class FindViewModel @Inject constructor(
     private val filterRepository: FilterRepository,
     private val mapRepository: MapRepository
 ) : ViewModel() {
-    private val isFocusSearchView = MutableLiveData<Boolean>()
     private val _uiState = MutableStateFlow(FindUiState())
     val uiState: StateFlow<FindUiState> = _uiState
 
     init {
         viewModelScope.launch {
-            // 최초위치요청 상태 가져오기
-            findingRepository.getIsFirstRequestLocation().collect { b ->
-                _uiState.update {
-                    Logger.d("getIsFirstRequestLocation:" + b)
-                    it.copy(isFirstRequestLocation = b)
-                }
-            }
+            subScribe()
         }
+    }
 
+    @OptIn(InternalCoroutinesApi::class)
+    suspend fun subScribe() {
         // 현재 위치를 요청중인지
         viewModelScope.launch {
-            findingRepository.isRequestingLocation().collect { b ->
-                Logger.d("isRequestingLocation:" + b)
+            findingRepository.isRequestingLocation().collect(FlowCollector { b ->
                 _uiState.update {
                     it.copy(isRequestingLocation = b)
                 }
-            }
+            })
         }
 
         viewModelScope.launch {
-            findingRepository.getSearchBoundRestaurnatTrigger().collect {
-                Logger.d("getSearchBoundRestaurnatTrigger: $it")
+            findingRepository.getSearchBoundRestaurnatTrigger().collect(FlowCollector {
                 if (it) {
                     val filter = filterRepository.getFilter()
                     findingRepository.searchRestaurant(
@@ -64,21 +61,38 @@ class FindViewModel @Inject constructor(
                         searchType = SearchType.BOUND
                     )
                 }
-            }
+            })
+        }
+
+        viewModelScope.launch {
+            findingRepository.isFirstRequestLocationPermission().collect(FlowCollector { b ->
+                _uiState.update {
+                    it.copy(
+                        showLocationPermissionDialogPopup = b
+                    )
+                }
+            })
+        }
+
+        viewModelScope.launch {
+            findingRepository.hasGrantPermission().collect(FlowCollector { grant ->
+                _uiState.update {
+                    Logger.d("is location permission granted :  ${grant == PackageManager.PERMISSION_GRANTED}")
+                    it.copy(
+                        hasGrantLocationPermission = (grant == PackageManager.PERMISSION_GRANTED)
+                    )
+                }
+            })
         }
     }
 
     // 상태를 가져오고 뷰에서 위치 요청을 했다면 요청했다고 저장소에 알려주기
     fun requestLocation() {
         viewModelScope.launch {
-            findingRepository.notifyRequestLocation()
-        }
-    }
-
-    // 위치를 받아왔을때 알려줘야함
-    fun onReceiveLocation() {
-        viewModelScope.launch {
-            findingRepository.notifyReceiveLocation()
+            findingRepository.checkFirstRequestLocationPermission()
+            if (findingRepository.hasGrantPermission().value == PackageManager.PERMISSION_GRANTED) {
+                findingRepository.notifyRequestLocation()
+            }
         }
     }
 
@@ -89,7 +103,36 @@ class FindViewModel @Inject constructor(
         }
     }
 
-    fun setIsFocusSearchView(isFocusSearchView: Boolean) {
-        this.isFocusSearchView.value = isFocusSearchView
+    fun requestLocationPermission(b: Boolean) {
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    showLocationPermissionDialogPopup = false
+                )
+            }
+        }
+
+        viewModelScope.launch {
+            //저장소에 권한 요청에 대한 사용자의 응답을 보냄
+            findingRepository.requestLocationPermission(b)
+        }
+
+        // 사용자가 권한팝업을 나오도록 허용했다면
+        if (b) {
+            viewModelScope.launch {
+                _uiState.update {
+                    it.copy(
+                        showLocationSystemPermission = true
+                    )
+                }
+            }
+        }
+    }
+
+    fun permissionGranated() {
+        viewModelScope.launch {
+            findingRepository.permissionGranated()
+        }
     }
 }

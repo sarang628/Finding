@@ -4,13 +4,11 @@ import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.torang_core.data.model.SearchType
-import com.example.torang_core.repository.FilterRepository
-import com.example.torang_core.repository.FindRepository
-import com.example.torang_core.repository.MapRepository
-import com.example.torang_core.repository.SearchRepository
+import com.example.torang_core.repository.*
 import com.example.torang_core.util.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -46,6 +44,7 @@ class FindViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            // 검색된 맛집 리스트
             findingRepository.getSearchBoundRestaurnatTrigger().collect(FlowCollector {
                 if (it) {
                     val filter = filterRepository.getFilter()
@@ -65,33 +64,33 @@ class FindViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            findingRepository.isFirstRequestLocationPermission().collect(FlowCollector { b ->
-                _uiState.update {
-                    it.copy(
-                        showLocationPermissionDialogPopup = b
-                    )
-                }
-            })
-        }
-
-        viewModelScope.launch {
-            findingRepository.hasGrantPermission().collect(FlowCollector { grant ->
-                _uiState.update {
-                    Logger.d("is location permission granted :  ${grant == PackageManager.PERMISSION_GRANTED}")
-                    it.copy(
-                        hasGrantLocationPermission = (grant == PackageManager.PERMISSION_GRANTED)
-                    )
-                }
+            findingRepository.hasGrantPermission().collect(FlowCollector { permission ->
+                _uiState.update { it.copy(hasGrantLocationPermission = (permission == PackageManager.PERMISSION_GRANTED)) }
             })
         }
     }
 
-    // 상태를 가져오고 뷰에서 위치 요청을 했다면 요청했다고 저장소에 알려주기
+    // 위치 요청하기
     fun requestLocation() {
         viewModelScope.launch {
-            findingRepository.checkFirstRequestLocationPermission()
-            if (findingRepository.hasGrantPermission().value == PackageManager.PERMISSION_GRANTED) {
-                findingRepository.notifyRequestLocation()
+            when (findingRepository.notifyRequestLocation()) {
+                // 첫 요청 시 권한 필요 팝업 상태 변경
+                RequestLocationResult.NEED_LOCATION_PERMISSION -> {
+                    _uiState.update { it.copy(showLocationPermissionDialogPopup = true) }
+                    delay(100)
+                    _uiState.update { it.copy(showLocationPermissionDialogPopup = false) }
+                }
+                // 권한 거부 시 설정 화면 이동 팝업 상태 변경
+                RequestLocationResult.PERMISSION_DENIED -> {
+                    _uiState.update { it.copy(showNeedPermissionPopup = true) }
+                    delay(100)
+                    _uiState.update { it.copy(showNeedPermissionPopup = false) }
+                }
+                RequestLocationResult.GPS_OFF -> {
+                    _uiState.update { it.copy(gpsOff = true) }
+                    delay(100)
+                    _uiState.update { it.copy(gpsOff = false) }
+                }
             }
         }
     }
@@ -103,34 +102,8 @@ class FindViewModel @Inject constructor(
         }
     }
 
-    fun requestLocationPermission(b: Boolean) {
-
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    showLocationPermissionDialogPopup = false
-                )
-            }
-        }
-
-        viewModelScope.launch {
-            //저장소에 권한 요청에 대한 사용자의 응답을 보냄
-            findingRepository.requestLocationPermission(b)
-        }
-
-        // 사용자가 권한팝업을 나오도록 허용했다면
-        if (b) {
-            viewModelScope.launch {
-                _uiState.update {
-                    it.copy(
-                        showLocationSystemPermission = true
-                    )
-                }
-            }
-        }
-    }
-
     fun permissionGranated() {
+        Logger.d("call permissionGranated in viewmodel")
         viewModelScope.launch {
             findingRepository.permissionGranated()
         }

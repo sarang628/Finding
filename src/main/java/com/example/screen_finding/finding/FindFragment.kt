@@ -2,8 +2,11 @@ package com.example.screen_finding.finding
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,12 +34,14 @@ import kotlinx.coroutines.launch
 class FindFragment : Fragment() {
     private val viewModel: FindViewModel by viewModels()
 
-    private var isShowDialog = false
-
     private val requestPermissionLauncher1 =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) {
+            it.get(Manifest.permission.ACCESS_COARSE_LOCATION)?.let {
+                if (it)
+                    viewModel.permissionGranated()
+            }
         }
 
     override fun onCreateView(
@@ -119,29 +124,55 @@ class FindFragment : Fragment() {
         if (uiState.showLocationSystemPermission) {
             requestPermission1()
         }
+        showNeedPermissionPopup(uiState.showNeedPermissionPopup)
+        gpsOff(uiState.gpsOff)
+    }
+
+    private fun showNeedPermissionPopup(showNeedPermissionPopup: Boolean) {
+        if (!showNeedPermissionPopup)
+            return
+
+        AlertDialog.Builder(requireContext())
+            .setMessage("위치권한이 필요합니다. 권한 설정화면으로 이동하시겠습니까?")
+            .setPositiveButton("예") { _, _ ->
+                val intent = Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", requireContext().getPackageName(), null)
+                )
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
+            .show()
+    }
+
+    private fun gpsOff(show: Boolean) {
+        if (!show)
+            return
+
+        AlertDialog.Builder(requireContext())
+            .setMessage("GPS가 꺼져있습니다. 설정화면으로 이동하시겠습니까?")
+            .setPositiveButton("예") { _, _ ->
+                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+            .show()
     }
 
     /**
      * 위치 권한 요청 다이얼로그
      */
     private fun showLocationDialog(b: Boolean) {
-        if (!b || isShowDialog)
+        if (!b)
             return
 
-        isShowDialog = true
         AlertDialog.Builder(requireContext())
             .setCancelable(false)
             .setMessage("지도 검색 기능을 사용하기위해서는 위치권한을 필요로 합니다. 위치권한을 허용하시겠습니까?")
             .setPositiveButton("예") { _, _ ->
-                viewModel.requestLocationPermission(true)
-                isShowDialog = false
+                requestPermission1()
             }
             .setNegativeButton("아니오") { _, _ ->
-                viewModel.requestLocationPermission(false)
-                isShowDialog = false
             }
             .setOnDismissListener {
-                isShowDialog = false
             }
             .show()
     }
@@ -153,8 +184,6 @@ class FindFragment : Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED -> {
                 // You can use the API that requires the permission.
-                Logger.d("permission granted")
-                viewModel.permissionGranated()
             }
             shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
             -> {

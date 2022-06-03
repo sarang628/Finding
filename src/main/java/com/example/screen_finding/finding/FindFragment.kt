@@ -20,7 +20,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.screen_finding.R
 import com.example.screen_finding.databinding.FindingFragmentBinding
-import com.example.torang_core.util.Logger
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,15 +33,13 @@ import kotlinx.coroutines.launch
 class FindFragment : Fragment() {
     private val viewModel: FindViewModel by viewModels()
 
-    private val requestPermissionLauncher1 =
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) {
-            it.get(Manifest.permission.ACCESS_COARSE_LOCATION)?.let {
-                if (it)
-                    viewModel.permissionGranated()
-            }
+    private val locationPermissionContract = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) {
+        if (it[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
+            viewModel.permissionGranated()
         }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,7 +78,7 @@ class FindFragment : Fragment() {
             }
 
             // 내위치 요청 클릭
-            toggleBtn.setOnClickListener {
+            btnMylocation.setOnClickListener {
                 viewModel.requestLocation()
             }
         }
@@ -119,7 +116,7 @@ class FindFragment : Fragment() {
      */
     private fun updateUI(binding: FindingFragmentBinding, uiState: FindUiState) {
         binding.uiState = uiState
-        changeStateButton(binding.toggleBtn, uiState.isRequestingLocation)
+        changeStateButton(binding.btnMylocation, uiState.isRequestingLocation)
         showLocationDialog(uiState.showLocationPermissionDialogPopup)
         if (uiState.showLocationSystemPermission) {
             requestPermission1()
@@ -177,6 +174,7 @@ class FindFragment : Fragment() {
             .show()
     }
 
+    //start
     private fun requestPermission1() {
         when {
             ContextCompat.checkSelfPermission(
@@ -187,16 +185,9 @@ class FindFragment : Fragment() {
             }
             shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
             -> {
-                // In an educational UI, explain to the user why your app requires this
-                // permission for a specific feature to behave as expected. In this UI,
-                // include a "cancel" or "no thanks" button that allows the user to
-                // continue using your app without granting the permission.
-                //showInContextUI(...)
             }
             else -> {
-                // You can directly ask for the permission.
-                // The registered ActivityResultCallback gets the result of this request.
-                requestPermissionLauncher1.launch(
+                locationPermissionContract.launch(
                     arrayOf(
                         Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION
@@ -206,4 +197,5 @@ class FindFragment : Fragment() {
             }
         }
     }
+    //end
 }

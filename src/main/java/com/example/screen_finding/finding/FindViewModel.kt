@@ -44,7 +44,7 @@ class FindViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            // 검색된 맛집 리스트
+            // 반경으로 맛집 검색
             findingRepository.getSearchBoundRestaurnatTrigger().collect(FlowCollector {
                 if (it) {
                     val filter = filterRepository.getFilter()
@@ -64,6 +64,7 @@ class FindViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            // 권한 여부 listening
             findingRepository.hasGrantPermission().collect(FlowCollector { permission ->
                 _uiState.update { it.copy(hasGrantLocationPermission = (permission == PackageManager.PERMISSION_GRANTED)) }
             })

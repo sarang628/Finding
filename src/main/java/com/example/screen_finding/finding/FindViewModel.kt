@@ -30,6 +30,10 @@ class FindViewModel @Inject constructor(
         viewModelScope.launch {
             subScribe()
         }
+
+        viewModelScope.launch {
+            findingRepository.searchIfRestaurantEmpty()
+        }
     }
 
     @OptIn(InternalCoroutinesApi::class)

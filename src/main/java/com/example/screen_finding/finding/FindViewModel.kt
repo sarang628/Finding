@@ -9,10 +9,7 @@ import com.example.torang_core.util.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +18,8 @@ class FindViewModel @Inject constructor(
     private val searchRepository: SearchRepository,
     private val findingRepository: FindRepository,
     private val filterRepository: FilterRepository,
-    private val mapRepository: MapRepository
+    private val mapRepository: MapRepository,
+    private val nationRepository: NationRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(FindUiState())
     val uiState: StateFlow<FindUiState> = _uiState
@@ -51,17 +49,11 @@ class FindViewModel @Inject constructor(
             // 반경으로 맛집 검색
             findingRepository.getSearchBoundRestaurnatTrigger().collect(FlowCollector {
                 if (it) {
-                    val filter = filterRepository.getFilter()
-                    findingRepository.searchRestaurant(
-                        distances = filter.distances,
-                        restaurantType = filter.restaurantTypes,
-                        prices = filter.prices,
-                        ratings = filter.ratings,
+                    searchBoundRestaurant(
                         northEastLatitude = mapRepository.getNorthEastLatitude(),
                         northEastLongitude = mapRepository.getNorthEastLongitude(),
                         southWestLatitude = mapRepository.getSouthWestLatitude(),
                         southWestLongitude = mapRepository.getSouthWestLongitude(),
-                        searchType = SearchType.BOUND
                     )
                 }
             })
@@ -73,6 +65,39 @@ class FindViewModel @Inject constructor(
                 _uiState.update { it.copy(hasGrantLocationPermission = (permission == PackageManager.PERMISSION_GRANTED)) }
             })
         }
+
+        viewModelScope.launch {
+            nationRepository.getSelectNationItem().collect(FlowCollector {
+                it.nationBound?.let {
+                    searchBoundRestaurant(
+                        northEastLatitude = it.latitudeNorthEast,
+                        northEastLongitude = it.longitudeNorthEast,
+                        southWestLatitude =  it.latitudeSouthWest,
+                        southWestLongitude = it.longitudeSouthWest
+                    )
+                }
+            })
+        }
+    }
+
+    suspend fun searchBoundRestaurant(
+        northEastLatitude: Double,
+        northEastLongitude: Double,
+        southWestLatitude: Double,
+        southWestLongitude: Double
+    ) {
+        val filter = filterRepository.getFilter()
+        findingRepository.searchRestaurant(
+            distances = filter.distances,
+            restaurantType = filter.restaurantTypes,
+            prices = filter.prices,
+            ratings = filter.ratings,
+            northEastLatitude = northEastLatitude,
+            northEastLongitude = northEastLongitude,
+            southWestLatitude = southWestLatitude,
+            southWestLongitude = southWestLongitude,
+            searchType = SearchType.BOUND
+        )
     }
 
     // 위치 요청하기

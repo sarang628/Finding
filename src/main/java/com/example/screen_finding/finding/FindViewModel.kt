@@ -46,20 +46,6 @@ class FindViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            // 반경으로 맛집 검색
-            findingRepository.getSearchBoundRestaurnatTrigger().collect(FlowCollector {
-                if (it) {
-                    searchBoundRestaurant(
-                        northEastLatitude = mapRepository.getNorthEastLatitude(),
-                        northEastLongitude = mapRepository.getNorthEastLongitude(),
-                        southWestLatitude = mapRepository.getSouthWestLatitude(),
-                        southWestLongitude = mapRepository.getSouthWestLongitude(),
-                    )
-                }
-            })
-        }
-
-        viewModelScope.launch {
             // 권한 여부 listening
             findingRepository.hasGrantPermission().collect(FlowCollector { permission ->
                 _uiState.update { it.copy(hasGrantLocationPermission = (permission == PackageManager.PERMISSION_GRANTED)) }
@@ -80,7 +66,7 @@ class FindViewModel @Inject constructor(
         }
     }
 
-    suspend fun searchBoundRestaurant(
+    private suspend fun searchBoundRestaurant(
         northEastLatitude: Double,
         northEastLongitude: Double,
         southWestLatitude: Double,

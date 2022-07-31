@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.sarang628:TravelMode:9cdfb324e5@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/fdf0603fe28670eedd364094e2f8df5d/transformed/jetified-TravelMode-9cdfb324e5/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fdf0603fe28670eedd364094e2f8df5d/transformed/jetified-TravelMode-9cdfb324e5/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fdf0603fe28670eedd364094e2f8df5d/transformed/jetified-TravelMode-9cdfb324e5/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.sarang628/TravelMode/9cdfb324e5/260d3b7ad1738275475e90393b6d7c711043feca/TravelMode-9cdfb324e5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ScreenFindingtest.iml" filepath="$PROJECT_DIR$/.idea/modules/ScreenFindingtest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ScreenFindingtest.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ScreenFindingtest.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ScreenFindingtest.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ScreenFindingtest.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ScreenFindingtest.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ScreenFindingtest.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ScreenFindingtest.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ScreenFindingtest.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ScreenFindingtest.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ScreenFindingtest.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ScreenFindingtest.library.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ScreenFindingtest.library.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ScreenFindingtest.library.main.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ScreenFindingtest.library.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ScreenFindingtest.library.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ScreenFindingtest.library.unitTest.iml" />
+    </modules>
+  </component>
+</project>

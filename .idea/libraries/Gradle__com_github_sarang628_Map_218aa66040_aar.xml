@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.sarang628:Map:218aa66040@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/a61c587407326b68817a04762f8575c2/transformed/jetified-Map-218aa66040/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a61c587407326b68817a04762f8575c2/transformed/jetified-Map-218aa66040/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a61c587407326b68817a04762f8575c2/transformed/jetified-Map-218aa66040/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.sarang628/Map/218aa66040/8534f2bd1fcabdaf204bbfe8c7fad22ec4ae98ce/Map-218aa66040-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,3 @@
+rootProject.name = "ScreenFindingtest"
+include ':app'
+include ':library'

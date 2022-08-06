@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
     implementation 'com.github.sarang628:Map:218aa66040'
     implementation 'com.github.sarang628:Search:b324d176f9'
-    implementation 'com.github.sarang628:TorangRepository:5cdb45b76e'
+    implementation 'com.github.sarang628:TorangRepository:17d108d0e2'
     implementation 'com.github.sarang628:TravelMode:9cdfb324e5'
     implementation 'com.github.sarang628:Filter:f16bd37ab1'
     implementation project(path: ':library')

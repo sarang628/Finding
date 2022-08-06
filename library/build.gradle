@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
     implementation 'com.github.sarang628:Filter:f16bd37ab1'
     implementation 'com.github.sarang628:TravelMode:9cdfb324e5'
-    implementation 'com.github.sarang628:CardInfo:e6ebbde555'
+    implementation 'com.github.sarang628:CardInfo:1fdfaf7007'
 
     /** common */
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"

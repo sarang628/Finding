@@ -15,13 +15,13 @@ import javax.inject.Singleton
 @Module
 class DaoModules {
     /** 로컬 데이터베이스의 사용자 관리 DAO 제공 */
-    /*@Provides
+    @Provides
     fun provideRestaurantDao(appDatabase: AppDatabase): RestaurantDao {
         return appDatabase.restaurantDao()
-    }*/
+    }
 
-    /*@Provides
+    @Provides
     fun provideSearchDao(appDatabase: AppDatabase): SearchDao {
         return appDatabase.searchDao()
-    }*/
+    }
 }

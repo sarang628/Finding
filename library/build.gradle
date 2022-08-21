@@ -38,14 +38,14 @@ android {
 
 dependencies {
 
-    implementation 'com.github.sarang628:TorangCore:5dd8950a5a'
-    implementation 'com.github.sarang628:Map:218aa66040'
-    implementation 'com.github.sarang628:Search:b324d176f9'
-    implementation 'com.github.sarang628:TorangRepository:17d108d0e2'
+    implementation "com.github.sarang628:TorangCore:$coreVersion"
+    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
+    implementation "com.github.sarang628:Map:$mapVersion"
+    implementation "com.github.sarang628:Search:$searchVersion"
+    implementation "com.github.sarang628:TravelMode:$travelModeVersion"
+    implementation "com.github.sarang628:Filter:$filterVersion"
+    implementation "com.github.sarang628:CardInfo:$cardInfoVersion"
     implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
-    implementation 'com.github.sarang628:Filter:c0069037dd'
-    implementation 'com.github.sarang628:TravelMode:9cdfb324e5'
-    implementation 'com.github.sarang628:CardInfo:1fdfaf7007'
 
     /** common */
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"

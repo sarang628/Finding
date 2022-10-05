@@ -3,9 +3,9 @@ package com.example.screen_finding.finding
 import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.torang_core.data.model.SearchType
-import com.example.torang_core.repository.*
-import com.example.torang_core.util.Logger
+import com.sryang.torang_core.data.entity.SearchType
+import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.repository.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.delay

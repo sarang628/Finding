@@ -9,7 +9,7 @@
             name="uiState"
             type="com.example.screen_finding.finding.FindUiState" />
 
-        <import type="com.example.torang_core.data.model.MapMode" />
+        <import type="com.sryang.torang_core.data.entity.MapMode" />
 
         <import type="android.view.View" />
     </data>

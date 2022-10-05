@@ -3,9 +3,9 @@ package com.example.screen_finding.finding
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.torang_core.repository.FindRepository
-import com.example.torang_core.repository.SearchRepository
-import com.example.torang_core.util.Logger
+import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.repository.FindRepository
+import com.sryang.torang_repository.repository.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,8 +1,8 @@
 ext {
     // Sdk and tools
-    compileSdkVersion = 31
+    compileSdkVersion = 33
     minSdkVersion = 23
-    targetSdkVersion = 30
+    targetSdkVersion = 33
     buildToolsVersion = '30.0.3'
 
     workVersion = '2.7.0'
@@ -38,13 +38,14 @@ ext {
     recyclerViewVersion = '1.2.1'
     facebookLibraryVersion = '8.1.0'
 
-    torangRepositoryVersion = '37e74cb9f4'
-    coreVersion = '1a0e406fa3'
-    mapVersion = '4ea4699fa0'
-    searchVersion = '04623d1f4c'
-    travelModeVersion = 'e93fb1a0ec'
-    filterVersion = 'ec7656fb99'
-    cardInfoVersion = 'c2a534bdee'
+    torangRepositoryVersion = 'v0.0.1'
+    coreVersion = 'v0.0.1'
+    mapVersion = 'v0.0.1'
+    searchVersion = 'v0.0.1.1'
+    travelModeVersion = 'v0.0.1'
+    filterVersion = '0.0.1.2'
+    cardInfoVersion = 'v0.0.1'
+    torangLocationServiceVersion = '83d7409e6a'
 }
 
 buildscript {

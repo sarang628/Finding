@@ -1,8 +1,9 @@
 package com.sryang.screenfindingtest
 
-import com.example.torang_core.data.model.*
-import com.example.torang_core.repository.FilterRepository
-import com.example.torang_core.util.Logger
+import com.sryang.screen_filter.FilterUiStateUtil
+import com.sryang.torang_core.data.entity.*
+import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.repository.FilterRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -11,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class TestFilterRepository @Inject constructor() : FilterRepository {
-    private val filter = MutableStateFlow(Filter())
+    private val filter = MutableStateFlow(FilterUiStateUtil.createEmptyValue())
 
     override fun getCurrentFilter(): StateFlow<Filter> {
         return filter

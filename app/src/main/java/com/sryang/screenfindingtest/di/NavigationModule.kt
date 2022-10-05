@@ -1,7 +1,7 @@
 package com.sryang.screenfindingtest.di
 
 import android.content.Context
-import com.example.torang_core.navigation.RestaurantDetailNavigation
+import com.sryang.torang_core.navigation.RestaurantDetailNavigation
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

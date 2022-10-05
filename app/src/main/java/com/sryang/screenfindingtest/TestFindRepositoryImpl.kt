@@ -3,14 +3,12 @@ package com.sryang.screenfindingtest
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import com.example.torang_core.data.model.*
-import com.example.torang_core.repository.FindRepository
-import com.example.torang_core.repository.RequestLocationResult
-import com.example.torang_core.util.Logger
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.sryang.torang_core.data.entity.*
+import com.sryang.torang_repository.repository.FindRepository
+import com.sryang.torang_repository.repository.RequestLocationResult
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,10 +52,10 @@ class TestFindRepositoryImpl @Inject constructor(@ApplicationContext val context
         searchType: SearchType
     ) {
         val list: ArrayList<Restaurant> = ArrayList()
-        list.add(Restaurant().apply {
+        /*list.add(Restaurant().apply {
             lat = northEastLatitude
             lon = northEastLongitude
-        })
+        })*/
 
         context.assets.open("restaurants.json").use { inputStream ->
             com.google.gson.stream.JsonReader(inputStream.reader()).use { jsonReader ->

@@ -56,6 +56,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
 
+<!--        app:navGraph="@navigation/nav_filter_parent"-->
         <!--   filter     -->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/filter_container"
@@ -67,7 +68,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/nav_filter_parent" />
+             />
 
         <!--  search view   -->
         <ImageView

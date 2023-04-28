@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk rootProject.compileSdk
 
     defaultConfig {
         applicationId "com.sryang.screenfindingtest"
-        minSdk 23
-        targetSdk 33
+        minSdk rootProject.minSdk
+        targetSdk rootProject.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -36,52 +36,53 @@ android {
         dataBinding true
         viewBinding true
     }
+    namespace 'com.sryang.screenfindingtest'
 }
 
 dependencies {
-
-    implementation "com.github.sarang628:TorangLocationService:$torangLocationServiceVersion"
-    implementation "com.github.sarang628:TorangCore:$coreVersion"
-    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
-    implementation "com.github.sarang628:Map:$mapVersion"
-    implementation "com.github.sarang628:Search:$searchVersion"
-    implementation "com.github.sarang628:TravelMode:$travelModeVersion"
-    implementation "com.github.sarang628:Filter:$filterVersion"
-    implementation "com.github.sarang628:CardInfo:$cardInfoVersion"
-    implementation 'com.github.sarang628:TorangLocationService:b4fbcc626f'
-    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
-    implementation project(path: ':library')
-
-
+    /** common */
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     /** common */
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "androidx.core:core-ktx:$ktxVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$junitTestVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$archLifecycleVersion"
+    implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
+    implementation 'androidx.activity:activity-ktx:1.7.0'
+
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
-
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     /** HILT */
-    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    implementation "com.google.dagger:hilt-android:$hiltAndroidVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
     annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.38.1")
 
     /** NAVIGATION COMPONENT */
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion" // Kotlin
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion" // Kotlin
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"
-    // Feature module Support
     androidTestImplementation "androidx.navigation:navigation-testing:$navigationVersion"
-    // Testing Navigation
     implementation "androidx.navigation:navigation-compose:$navigationVersion"
-    // Jetpack Compose Integration
+
+//    implementation "com.github.sarang628:Map:$mapVersion"
+//    implementation "com.github.sarang628:Search:$searchVersion"
+//    implementation "com.github.sarang628:TravelMode:$travelModeVersion"
+//    implementation "com.github.sarang628:Filter:$filterVersion"
+//    implementation "com.github.sarang628:CardInfo:$cardInfoVersion"
+//    implementation 'com.github.sarang628:TorangLocationService:b4fbcc626f'
+//    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
+    implementation project(path: ':library')
 }

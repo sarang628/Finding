@@ -9,7 +9,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        minSdk 23
+        minSdk 21
         targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -32,19 +32,10 @@ android {
     buildFeatures {
         dataBinding = true
     }
+    namespace 'com.example.screen_finding'
 }
 
 dependencies {
-
-    implementation "com.github.sarang628:TorangCore:$coreVersion"
-    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
-    implementation "com.github.sarang628:Map:$mapVersion"
-    implementation "com.github.sarang628:Search:$searchVersion"
-    implementation "com.github.sarang628:TravelMode:$travelModeVersion"
-//    implementation "com.github.sarang628:Filter:$filterVersion"
-    implementation "com.github.sarang628:CardInfo:$cardInfoVersion"
-    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
-
     /** common */
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "androidx.core:core-ktx:$ktxVersion"
@@ -64,6 +55,7 @@ dependencies {
     /** HILT */
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
     annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
     implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0'
@@ -83,4 +75,12 @@ dependencies {
     def cardview_version = "1.0.0"
     implementation "androidx.cardview:cardview:$cardview_version"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
+
+//    implementation "com.github.sarang628:Map:$mapVersion"
+//    implementation "com.github.sarang628:Search:$searchVersion"
+//    implementation "com.github.sarang628:TravelMode:$travelModeVersion"
+//    implementation "com.github.sarang628:Filter:$filterVersion"
+//    implementation "com.github.sarang628:CardInfo:$cardInfoVersion"
+    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
+    implementation "com.github.sarang628:Theme:$themeVersion"
 }

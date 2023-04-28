@@ -31,13 +31,13 @@ import kotlinx.coroutines.launch
  */
 @AndroidEntryPoint
 class FindFragment : Fragment() {
-    private val viewModel: FindViewModel by viewModels()
+//    private val viewModel: FindViewModel by viewModels()
 
     private val locationPermissionContract = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
         if (it[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
-            viewModel.permissionGranated()
+//            viewModel.permissionGranated()
         }
     }
 
@@ -79,7 +79,7 @@ class FindFragment : Fragment() {
 
             // 내위치 요청 클릭
             btnMylocation.setOnClickListener {
-                viewModel.requestLocation()
+//                viewModel.requestLocation()
             }
         }
     }
@@ -92,9 +92,9 @@ class FindFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 // 위치 검색중 상태 변경
                 /**[FindUiState]*/
-                viewModel.uiState.collect {
-                    updateUI(binding, it)
-                }
+//                viewModel.uiState.collect {
+//                    updateUI(binding, it)
+//                }
             }
         }
     }

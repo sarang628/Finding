@@ -68,13 +68,11 @@ class FindFragment : Fragment() {
             //검색 영역 클릭 시 이동
             svMap.setOnClickListener {
                 val navController = findNavController()
-                navController.navigate(R.id.action_findFragment_to_searchFragment)
             }
 
             //검색 영역 클릭 시 이동
             tvKeyword.setOnClickListener {
                 val navController = findNavController()
-                navController.navigate(R.id.action_findFragment_to_searchFragment)
             }
 
             // 내위치 요청 클릭

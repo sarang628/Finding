@@ -44,13 +44,7 @@ ext {
     fragmentVersion = "1.5.6"
     kotlinVersion = '1.8.0'
 
-    torangRepositoryVersion = 'v0.0.1'
-    coreVersion = 'v0.0.1'
-    mapVersion = 'v0.0.1'
-    searchVersion = 'v0.0.1'
-    travelModeVersion = 'v0.0.1'
-    filterVersion = 'v0.0.1'
-    cardInfoVersion = 'v0.0.1'
+    mapVersion = '5cdf95d803'
     themeVersion = '6f8e2a7a08'
 }
 

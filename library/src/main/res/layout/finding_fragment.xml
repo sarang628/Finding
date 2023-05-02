@@ -17,18 +17,18 @@
         android:layout_height="match_parent"
         tools:context="com.example.screen_finding.finding.FindFragment">
 
-<!--        class="com.example.screen_map.MapsFragment"-->
-        <!-- map  -->
-        <!--<fragment
-            android:id="@+id/map_container"
 
+        <!-- map  -->
+        <fragment
+            android:id="@+id/map_container"
+            class="com.example.screen_map.MapsFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />-->
+            app:layout_constraintTop_toTopOf="parent" />
 
 
 <!--        android:backgroundTint="@{uiState.hasGrantLocationPermission?@color/colorSecondaryLight : @color/gray}"-->

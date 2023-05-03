@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-<!--        android:backgroundTint="@{uiState.hasGrantLocationPermission?@color/colorSecondaryLight : @color/gray}"-->
+        <!--        android:backgroundTint="@{uiState.hasGrantLocationPermission?@color/colorSecondaryLight : @color/gray}"-->
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btn_mylocation"
@@ -45,31 +45,30 @@
             app:layout_constraintBottom_toTopOf="@+id/card_page_container"
             app:layout_constraintEnd_toEndOf="parent" />
 
-<!--        class="com.example.cardinfo.RestaurantInfoCardFragment"-->
-        <!--<fragment
+        <fragment
             android:id="@+id/card_page_container"
+            class="com.example.cardinfo.RestaurantInfoCardFragment"
             android:layout_width="0dp"
             android:layout_height="180dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />-->
+            app:layout_constraintStart_toStartOf="parent" />
 
-
-<!--        app:navGraph="@navigation/nav_filter_parent" -->
         <!--   filter     -->
-        <!--<androidx.fragment.app.FragmentContainerView
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/filter_container"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="10dp"
             app:defaultNavHost="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />-->
+            app:navGraph="@navigation/nav_filter_parent"
+            />
 
-<!--        android:src="@drawable/ic_search"-->
+        <!--        android:src="@drawable/ic_search"-->
         <!--  search view   -->
         <ImageView
             android:id="@+id/sv_map"

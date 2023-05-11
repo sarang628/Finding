@@ -10,17 +10,19 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.Composable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.cardinfo.RestaurantCardInfo
 import com.example.screen_finding.R
 import com.example.screen_finding.databinding.FindingFragmentBinding
+import com.example.screen_map.Map
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.sryang.screen_filter.ui.Filter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -31,16 +33,6 @@ import kotlinx.coroutines.launch
  */
 @AndroidEntryPoint
 class FindFragment : Fragment() {
-//    private val viewModel: FindViewModel by viewModels()
-
-    private val locationPermissionContract = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) {
-        if (it[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
-//            viewModel.permissionGranated()
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,6 +48,18 @@ class FindFragment : Fragment() {
 
         // 이벤트 초기화
         initEvent(binding)
+
+        binding.cvPageContainer.setContent {
+            RestaurantCardInfo()
+        }
+
+        binding.cvFilter.setContent {
+            Filter()
+        }
+
+        binding.cvMap.setContent {
+            Map()
+        }
 
         return binding.root
     }
@@ -181,19 +185,21 @@ class FindFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED -> {
                 // You can use the API that requires the permission.
             }
+
             shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
             -> {
             }
-            else -> {
-                locationPermissionContract.launch(
-                    arrayOf(
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    )
 
-                )
+            else -> {
+                
             }
         }
     }
     //end
+}
+
+
+@Composable
+fun test() {
+
 }

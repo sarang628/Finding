@@ -19,9 +19,8 @@
 
 
         <!-- map  -->
-        <fragment
-            android:id="@+id/map_container"
-            class="com.example.screen_map.MapsFragment"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/cv_map"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:defaultNavHost="true"
@@ -42,12 +41,12 @@
             app:borderWidth="0dp"
             app:elevation="6dp"
             app:icon="@android:drawable/ic_menu_mylocation"
-            app:layout_constraintBottom_toTopOf="@+id/card_page_container"
+            app:layout_constraintBottom_toTopOf="@+id/cv_page_container"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <fragment
-            android:id="@+id/card_page_container"
-            class="com.example.cardinfo.RestaurantInfoCardFragment"
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/cv_page_container"
             android:layout_width="0dp"
             android:layout_height="180dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -55,20 +54,16 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <!--   filter     -->
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/filter_container"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/cv_filter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:defaultNavHost="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/nav_filter_parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!--        android:src="@drawable/ic_search"-->
         <!--  search view   -->
         <ImageView
             android:id="@+id/sv_map"

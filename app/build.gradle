@@ -48,14 +48,8 @@ dependencies {
     //JetNews Main 따라하기
     implementation 'androidx.compose.material3:material3'
     implementation "androidx.compose.material3:material3-window-size-class"
-    implementation "androidx.navigation:navigation-compose"
-
-    /** NAVIGATION COMPONENT */
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion" // Kotlin
-    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion" // Kotlin
-    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"
-    androidTestImplementation "androidx.navigation:navigation-testing:$navigationVersion"
-    implementation "androidx.navigation:navigation-compose:$navigationVersion"
+    implementation 'androidx.activity:activity-compose:1.7.1'
 
     implementation project(path: ':library')
+    implementation "com.github.sarang628:CardInfo:$cardInfoVersion"
 }

@@ -5,20 +5,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.cardinfo.RestaurantCardInfo
+import com.example.cardinfo.RestaurantCardPage
+import com.example.cardinfo.RestaurantInfoCardUiState
 import com.example.screen_map.Map
 import com.sryang.screen_filter.ui.Filter
+import kotlinx.coroutines.flow.StateFlow
 
-@Preview
 @Composable
-fun FindScreen() {
+fun FindScreen(uiState: StateFlow<RestaurantInfoCardUiState>) {
     Box {
         Map()
         Column() {
             Filter()
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
-                RestaurantCardInfo()
+                RestaurantCardPage(uiState)
             }
         }
     }

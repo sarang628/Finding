@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.cardinfo.testRestaurantInfoCardUiState
 import com.example.screen_finding.finding.FindScreen
+import com.example.screen_finding.finding.TextFindScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val d = testRestaurantInfoCardUiState(this)
         setContent {
-            FindScreen(d)
+            TextFindScreen(this)
         }
     }
 }

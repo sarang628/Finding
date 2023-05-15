@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val d = testRestaurantInfoCardUiState(this)
         setContent {
-            TextFindScreen(this)
+            TextFindScreen()
         }
     }
 }

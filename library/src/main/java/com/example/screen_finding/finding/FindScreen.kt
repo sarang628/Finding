@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.StateFlow
 fun FindScreen(uiState: StateFlow<RestaurantInfoCardUiState>) {
     Box {
         Map()
-        Column() {
+        Column {
             Filter()
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
                 RestaurantCardPage(uiState)
@@ -34,7 +34,7 @@ fun TextFindScreen() {
     Box {
         val mapViewModel = MapViewModel(LocalContext.current)
         MapScreen(mapViewModel.mapUiStateFlow)
-        Column() {
+        Column {
             Filter()
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
                 TestRestaurantCard(context = LocalContext.current) {

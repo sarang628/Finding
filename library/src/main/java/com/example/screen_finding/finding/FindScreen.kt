@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.example.cardinfo.RestaurantCardPage
+import com.example.cardinfo.RestaurantCardViewModel
 import com.example.cardinfo.RestaurantInfoCardUiState
 import com.example.cardinfo.TestRestaurantCard
 import com.example.library.data.Restaurant
@@ -32,15 +33,18 @@ fun FindScreen(uiState: StateFlow<RestaurantInfoCardUiState>) {
 @Composable
 fun TextFindScreen() {
     Box {
+        val restaurantVardViewModel = RestaurantCardViewModel(LocalContext.current)
         val mapViewModel = MapViewModel(LocalContext.current)
-        MapScreen(mapViewModel.mapUiStateFlow)
+        MapScreen(mapViewModel.mapUiStateFlow, onMark = {
+            restaurantVardViewModel.selectRestaurant(it)
+        })
         Column {
             Filter()
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
-                TestRestaurantCard(context = LocalContext.current) {
+                RestaurantCardPage(restaurantVardViewModel.uiState) {
                     mapViewModel.selectRestaurant(
                         Restaurant(
-                            restaurant_id = it.restaurantId
+                            restaurant_id = restaurantVardViewModel.uiState.value.restaurants[it].restaurantId
                         )
                     )
                 }

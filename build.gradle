@@ -23,7 +23,8 @@ ext {
 
     mapVersion = 'bfad3856d9'
     themeVersion = '6f8e2a7a08'
-    cardInfoVersion = 'b160fa47eb'
+    cardInfoVersion = 'a8fd1aa654'
+    mapVersion = 'bfad3856d9'
     filterVersion = '40b6a6f290'
     dataVersion = '5e905f6f1f'
     torangRepositoryVersion = '46db8bba15'

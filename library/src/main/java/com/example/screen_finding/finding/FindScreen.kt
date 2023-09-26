@@ -14,6 +14,7 @@ import com.example.library.data.Restaurant
 import com.example.screen_map.Map
 import com.example.screen_map.MapScreen
 import com.example.screen_map.MapViewModel
+import com.example.screen_map.MarkerData
 import com.sryang.screen_filter.ui.Filter
 import kotlinx.coroutines.flow.StateFlow
 
@@ -31,22 +32,24 @@ fun FindScreen(uiState: StateFlow<RestaurantInfoCardUiState>) {
 }
 
 @Composable
-fun TextFindScreen() {
+fun TextFindScreen(mapViewModel: MapViewModel, restaurantVardViewModel: RestaurantCardViewModel) {
     Box {
-        val restaurantVardViewModel = RestaurantCardViewModel(LocalContext.current)
-        val mapViewModel = MapViewModel(LocalContext.current)
-        MapScreen(mapViewModel.mapUiStateFlow, onMark = {
-            restaurantVardViewModel.selectRestaurant(it)
-        })
+        MapScreen(
+            mapViewModel = mapViewModel,
+            mapViewModel.mapUiStateFlow, onMark = {
+                restaurantVardViewModel.selectRestaurant(it)
+            })
         Column {
             Filter()
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
                 RestaurantCardPage(restaurantVardViewModel.uiState) {
-                    mapViewModel.selectRestaurant(
-                        Restaurant(
-                            restaurant_id = restaurantVardViewModel.uiState.value.restaurants[it].restaurantId
+                    if (restaurantVardViewModel.uiState.value.restaurants.size > it) {
+                        mapViewModel.selectRestaurant(
+                            MarkerData(
+                                id = restaurantVardViewModel.uiState.value.restaurants[it].restaurantId
+                            )
                         )
-                    )
+                    }
                 }
             }
         }

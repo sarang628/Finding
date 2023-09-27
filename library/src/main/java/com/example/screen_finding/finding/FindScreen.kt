@@ -25,14 +25,21 @@ fun FindScreen(uiState: StateFlow<RestaurantInfoCardUiState>) {
         Column {
             Filter()
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
-                RestaurantCardPage(uiState)
+                RestaurantCardPage(
+                    uiState = uiState,
+                    restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/"
+                )
             }
         }
     }
 }
 
 @Composable
-fun TextFindScreen(mapViewModel: MapViewModel, restaurantVardViewModel: RestaurantCardViewModel) {
+fun TextFindScreen(
+    mapViewModel: MapViewModel,
+    restaurantVardViewModel: RestaurantCardViewModel,
+    restaurantImageUrl: String
+) {
     Box {
         MapScreen(
             mapViewModel = mapViewModel,
@@ -42,15 +49,18 @@ fun TextFindScreen(mapViewModel: MapViewModel, restaurantVardViewModel: Restaura
         Column {
             Filter()
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
-                RestaurantCardPage(restaurantVardViewModel.uiState) {
-                    if (restaurantVardViewModel.uiState.value.restaurants.size > it) {
-                        mapViewModel.selectRestaurant(
-                            MarkerData(
-                                id = restaurantVardViewModel.uiState.value.restaurants[it].restaurantId
+                RestaurantCardPage(
+                    uiState = restaurantVardViewModel.uiState,
+                    restaurantImageUrl = restaurantImageUrl,
+                    onChangePage = {
+                        if (restaurantVardViewModel.uiState.value.restaurants.size > it) {
+                            mapViewModel.selectRestaurant(
+                                MarkerData(
+                                    id = restaurantVardViewModel.uiState.value.restaurants[it].restaurantId
+                                )
                             )
-                        )
-                    }
-                }
+                        }
+                    })
             }
         }
     }

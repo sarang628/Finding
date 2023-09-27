@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TextFindScreen(mapViewModel, restaurantVardViewModel)
+            TextFindScreen(mapViewModel, restaurantVardViewModel, restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/")
         }
     }
 }

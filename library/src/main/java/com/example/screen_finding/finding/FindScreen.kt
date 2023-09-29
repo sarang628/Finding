@@ -11,14 +11,11 @@ import com.sryang.screen_filter.ui.Filter
 
 @Composable
 fun FindScreen(
-    mapViewModel: MapViewModel,
-    onMark: ((Int) -> Unit)? = null,
-    restaurantCardPage: @Composable () -> Unit
+    restaurantCardPage: @Composable () -> Unit,
+    mapScreen: @Composable () -> Unit
 ) {
     Box {
-        MapScreen(
-            mapViewModel = mapViewModel,
-            mapViewModel.mapUiStateFlow, onMark = onMark)
+        mapScreen.invoke()
         Column {
             Filter()
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {

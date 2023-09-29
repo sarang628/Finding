@@ -29,10 +29,8 @@ class MainActivity : ComponentActivity() {
                         restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/",
                         onChangePage = {
                             if (restaurantVardViewModel.uiState.value.restaurants.size > it) {
-                                mapViewModel.selectRestaurant(
-                                    MarkerData(
-                                        id = restaurantVardViewModel.uiState.value.restaurants[it].restaurantId
-                                    )
+                                mapViewModel.selectRestaurantById(
+                                    id = restaurantVardViewModel.uiState.value.restaurants[it].restaurantId
                                 )
                             }
                         }, onClickCard = {}

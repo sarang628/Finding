@@ -21,11 +21,11 @@ ext {
 
     room_version = "2.5.1"
 
-    mapVersion = 'bfad3856d9'
+    mapVersion = 'f0f5645895'
     themeVersion = '6f8e2a7a08'
-    cardInfoVersion = '76b5dc3604'
-    mapVersion = 'bfad3856d9'
+    cardInfoVersion = 'fdfa79592e'
+    mapVersion = 'f0f5645895'
     filterVersion = '40b6a6f290'
     dataVersion = '5e905f6f1f'
-    torangRepositoryVersion = '46db8bba15'
+    torangRepositoryVersion = 'e2aba4de6e'
 }

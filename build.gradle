@@ -21,10 +21,9 @@ ext {
 
     room_version = "2.5.1"
 
-    mapVersion = 'f0f5645895'
     themeVersion = '6f8e2a7a08'
-    cardInfoVersion = 'fdfa79592e'
-    mapVersion = 'f0f5645895'
+    cardInfoVersion = '6f0a83c9da'
+    mapVersion = '75d1fba905'
     filterVersion = '40b6a6f290'
     dataVersion = '5e905f6f1f'
     torangRepositoryVersion = 'e2aba4de6e'

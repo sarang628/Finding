@@ -6,6 +6,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -14,7 +19,10 @@ import com.example.cardinfo.RestaurantCardViewModel
 import com.example.screen_finding.finding.FindScreen
 import com.example.screen_map.MapScreen
 import com.example.screen_map.MapViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.maps.android.compose.rememberCameraPositionState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -24,8 +32,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val cameraPositionState = rememberCameraPositionState()
+            val coroutineScope = rememberCoroutineScope()
             val navController = rememberNavController()
-            var isMovingByMarkerClick = false
+            var isMovingByMarkerClick by remember { mutableStateOf(false) }
             NavHost(navController = navController, startDestination = "find") {
                 Log.d("MainActivity", restaurantCardViewModel.uiState.value.toString())
                 composable("find") {
@@ -40,8 +50,9 @@ class MainActivity : ComponentActivity() {
                                         val restaurantId = restaurants[page].restaurantId
                                         restaurantCardViewModel.selectRestaurant(restaurantId)
 
-                                        if (!isMovingByMarkerClick)
+                                        if (!isMovingByMarkerClick) {
                                             mapViewModel.selectRestaurantById(id = restaurantId)
+                                        }
                                     }
                                 }, onClickCard = { navController.navigate("detail") }
                             )
@@ -49,16 +60,27 @@ class MainActivity : ComponentActivity() {
                         mapScreen = {
                             MapScreen(
                                 mapViewModel = mapViewModel,
-                                mapViewModel.mapUiStateFlow,
                                 onMark = {
                                     isMovingByMarkerClick = true
                                     restaurantCardViewModel.selectRestaurant(it)
                                 },
                                 animationMoveDuration = 300,
                                 onIdle = {
+                                    Log.d("MainActivity", "onIdle")
                                     isMovingByMarkerClick = false
-                                }
+                                },
+                                cameraPositionState = cameraPositionState
                             )
+                        },
+                        onZoomIn = {
+                            coroutineScope.launch {
+                                cameraPositionState.animate(CameraUpdateFactory.zoomIn())
+                            }
+                        },
+                        onZoomOut = {
+                            coroutineScope.launch {
+                                cameraPositionState.animate(CameraUpdateFactory.zoomOut())
+                            }
                         }
                     )
                 }

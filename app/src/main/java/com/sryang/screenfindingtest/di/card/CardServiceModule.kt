@@ -21,10 +21,10 @@ class CardServiceModule {
                         restaurantId = it.restaurantId,
                         restaurantName = it.restaurantName,
                         rating = it.rating,
-                        foodType = "it.restaurantType",
+                        foodType = it.restaurantType,
                         restaurantImage = it.imgUrl1,
-                        price = it.prices,
-                        distance = "100M"
+                        price = "$$",
+                        distance = "150M"
                     )
                 }.toList()
             }

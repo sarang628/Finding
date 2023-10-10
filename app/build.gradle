@@ -83,6 +83,7 @@ dependencies {
     implementation project(path: ':library')
     implementation "com.github.sarang628:CardInfo:$cardInfoVersion"
     implementation "com.github.sarang628:Map:$mapVersion"
+    implementation "com.github.sarang628:Filter:$filterVersion"
 
     implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
 }

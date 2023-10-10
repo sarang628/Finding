@@ -21,13 +21,14 @@ import com.sryang.screen_filter.ui.Filter
 fun FindScreen(
     restaurantCardPage: @Composable () -> Unit,
     mapScreen: @Composable () -> Unit,
+    filter: @Composable () -> Unit,
     onZoomIn: () -> Unit,
     onZoomOut: () -> Unit,
 ) {
     Box {
         mapScreen.invoke()
         Column {
-            Filter()
+            filter.invoke()
             Column(
                 Modifier.weight(1f),
                 verticalArrangement = Arrangement.Bottom,

@@ -21,6 +21,7 @@ import com.example.screen_map.MapScreen
 import com.example.screen_map.MapViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.sryang.screen_filter.ui.Filter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -81,7 +82,8 @@ class MainActivity : ComponentActivity() {
                             coroutineScope.launch {
                                 cameraPositionState.animate(CameraUpdateFactory.zoomOut())
                             }
-                        }
+                        },
+                        filter = { Filter() }
                     )
                 }
                 composable("detail") {

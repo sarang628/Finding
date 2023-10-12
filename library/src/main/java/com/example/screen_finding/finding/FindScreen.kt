@@ -24,6 +24,7 @@ fun FindScreen(
     filter: @Composable () -> Unit,
     onZoomIn: () -> Unit,
     onZoomOut: () -> Unit,
+    myLocation: @Composable () -> Unit,
 ) {
     Box {
         mapScreen.invoke()
@@ -42,6 +43,8 @@ fun FindScreen(
                     Button(onClick = { onZoomOut.invoke() }) {
                         Text(text = "-")
                     }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    myLocation.invoke()
                 }
                 restaurantCardPage()
             }

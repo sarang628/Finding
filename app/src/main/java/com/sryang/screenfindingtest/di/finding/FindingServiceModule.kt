@@ -1,6 +1,8 @@
 package com.sryang.screenfindingtest.di.finding
 
+import android.location.Location
 import android.util.Log
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,6 +22,7 @@ import com.example.screen_finding.finding.FindScreen
 import com.example.screen_finding.finding.FindingService
 import com.example.screen_finding.finding.FindingViewModel
 import com.example.screen_finding.finding.RestaurantInfo
+import com.example.screen_map.CurrentLocationScreen
 import com.example.screen_map.MapScreen
 import com.example.screen_map.MapViewModel
 import com.example.screen_map.MarkerData
@@ -95,6 +98,7 @@ fun Finding(
     val coroutineScope = rememberCoroutineScope()
     val navController = rememberNavController()
     var isMovingByMarkerClick by remember { mutableStateOf(false) }
+    var currentLocation by remember { mutableStateOf(newLocation()) }
     NavHost(navController = navController, startDestination = "find") {
         composable("find") {
             FindScreen(
@@ -112,20 +116,23 @@ fun Finding(
                     )
                 },
                 mapScreen = {
-                    MapScreen(
-                        mapViewModel = mapViewModel,
-                        onMark = {
-                            isMovingByMarkerClick = true
-                            findingViewModel.selectMarker(it)
-                        },
-                        onIdle = {
-                            Log.d("MainActivity", "onIdle")
-                            isMovingByMarkerClick = false
-                        },
-                        cameraPositionState = cameraPositionState,
-                        list = uiState.restaurants.stream().map { it.toMarkData() }.toList(),
-                        selectedMarkerData = uiState.selectedRestaurant?.toMarkData()
-                    )
+                    Box {
+                        MapScreen(
+                            mapViewModel = mapViewModel,
+                            onMark = {
+                                isMovingByMarkerClick = true
+                                findingViewModel.selectMarker(it)
+                            },
+                            onIdle = {
+                                Log.d("MainActivity", "onIdle")
+                                isMovingByMarkerClick = false
+                            },
+                            cameraPositionState = cameraPositionState,
+                            list = uiState.restaurants.stream().map { it.toMarkData() }.toList(),
+                            selectedMarkerData = uiState.selectedRestaurant?.toMarkData(),
+                            currentLocation = currentLocation
+                        )
+                    }
                 },
                 onZoomIn = {
                     coroutineScope.launch {
@@ -141,7 +148,8 @@ fun Finding(
                     Filter(filterViewModel = filterViewModel, onFilter = {
                         findingViewModel.filter(it.toFilter())
                     })
-                }
+                },
+                myLocation = { CurrentLocationScreen(onLocation = { currentLocation = it }) }
             )
         }
         composable("detail") {
@@ -178,4 +186,9 @@ fun FilterUiState.toFilter(): Filter {
         restaurantTypes = this.foodType,
         prices = price
     )
+}
+
+private fun newLocation(): Location {
+    val location = Location("MyLocationProvider")
+    return location
 }

@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.cardinfo.RestaurantCardData
 import com.example.cardinfo.RestaurantCardPage
 import com.example.cardinfo.RestaurantCardViewModel
+import com.example.screen_finding.finding.Filter
 import com.example.screen_finding.finding.FindScreen
 import com.example.screen_finding.finding.FindingService
 import com.example.screen_finding.finding.FindingViewModel
@@ -25,6 +26,7 @@ import com.example.screen_map.MarkerData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.sryang.screen_filter.ui.Filter
+import com.sryang.screen_filter.ui.FilterUiState
 import com.sryang.screen_filter.ui.FilterViewModel
 import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
@@ -34,6 +36,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.launch
 import kotlin.streams.toList
+
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -46,8 +49,24 @@ class FindingServiceModule {
                     it.toRestaurantInfo()
                 }.toList()
             }
+
+            override suspend fun filter(filter: com.example.screen_finding.finding.Filter): List<RestaurantInfo> {
+                return apiRestaurant.getFilterRestaurant(
+                    filter = filter.toFilter()
+                )
+                    .stream().map {
+                        it.toRestaurantInfo()
+                    }.toList()
+            }
         }
     }
+}
+
+fun com.example.screen_finding.finding.Filter.toFilter(): com.sryang.torang_repository.data.Filter {
+    return com.sryang.torang_repository.data.Filter(
+        restaurantTypes = this.restaurantTypes?.stream()?.map { it.uppercase() }?.toList(),
+        prices = this.prices
+    )
 }
 
 fun RemoteRestaurant.toRestaurantInfo(): RestaurantInfo {
@@ -120,7 +139,7 @@ fun Finding(
                 },
                 filter = {
                     Filter(filterViewModel = filterViewModel, onFilter = {
-
+                        findingViewModel.filter(it.toFilter())
                     })
                 }
             )
@@ -151,5 +170,12 @@ fun RestaurantInfo.toMarkData(): MarkerData {
         title = this.restaurantName,
         snippet = this.price,
         foodType = this.foodType
+    )
+}
+
+fun FilterUiState.toFilter(): Filter {
+    return com.example.screen_finding.finding.Filter(
+        restaurantTypes = this.foodType,
+        prices = price
     )
 }

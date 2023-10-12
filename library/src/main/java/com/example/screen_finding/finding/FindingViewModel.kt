@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FindingViewModel @Inject constructor(
-    findingService: FindingService
+    val findingService: FindingService
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(FindingUiState(ArrayList()))
     val uiState = _uiState.asStateFlow()
@@ -20,6 +20,14 @@ class FindingViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.emit(
                 uiState.value.copy(restaurants = findingService.findRestaurants())
+            )
+        }
+    }
+
+    fun filter(filter: Filter) {
+        viewModelScope.launch {
+            _uiState.emit(
+                uiState.value.copy(restaurants = findingService.filter(filter))
             )
         }
     }
@@ -53,3 +61,18 @@ class FindingViewModel @Inject constructor(
         }
     }
 }
+
+data class Filter(
+    var searchType: String = "AROUND",
+    var keyword: String? = null,
+    var distances: String? = null,
+    var prices: List<String>? = null,
+    var restaurantTypes: List<String>? = null,
+    var ratings: List<String>? = null,
+    var lat: Double? = null,
+    var lon: Double? = null,
+    var north: Double = 0.0,
+    var east: Double = 0.0,
+    var south: Double = 0.0,
+    var west: Double = 0.0
+)

@@ -1,5 +1,6 @@
 package com.example.screen_finding.finding
 
+import android.location.Location
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -56,6 +57,16 @@ class FindingViewModel @Inject constructor(
             _uiState.emit(
                 uiState.value.copy(
                     selectedRestaurant = selectedRestaurant
+                )
+            )
+        }
+    }
+
+    fun setCurrentLocation(it: Location) {
+        viewModelScope.launch {
+            _uiState.emit(
+                uiState.value.copy(
+                    currentLocation = it
                 )
             )
         }

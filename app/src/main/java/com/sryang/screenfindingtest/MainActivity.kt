@@ -42,12 +42,21 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Finding(
-                findingViewModel = findingViewModel,
-                restaurantCardViewModel = restaurantCardViewModel,
-                filterViewModel = filterViewModel,
-                mapViewModel = mapViewModel
-            )
+            val navController = rememberNavController()
+            NavHost(navController = navController, startDestination = "finding") {
+                composable("finding") {
+                    Finding(
+                        findingViewModel = findingViewModel,
+                        restaurantCardViewModel = restaurantCardViewModel,
+                        filterViewModel = filterViewModel,
+                        mapViewModel = mapViewModel,
+                        navController = navController
+                    )
+                }
+                composable("restaurant/{restaurantId}") {
+                    Text(text = "")
+                }
+            }
         }
     }
 }

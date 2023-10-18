@@ -130,6 +130,7 @@ fun Finding(
     val coroutineScope = rememberCoroutineScope()
     var isMovingByMarkerClick by remember { mutableStateOf(false) }
 
+
     FindScreen(
         restaurantCardPage = {
             RestaurantCardPage(

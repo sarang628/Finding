@@ -19,16 +19,24 @@ class FindingViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            val result = findingService.findRestaurants()
             _uiState.emit(
-                uiState.value.copy(restaurants = findingService.findRestaurants())
+                uiState.value.copy(
+                    restaurants = result,
+                    selectedRestaurant = if (!result.isEmpty()) result[0] else null
+                )
             )
         }
     }
 
     fun filter(filter: Filter) {
         viewModelScope.launch {
+            val result = findingService.filter(filter)
             _uiState.emit(
-                uiState.value.copy(restaurants = findingService.filter(filter))
+                uiState.value.copy(
+                    restaurants = result,
+                    selectedRestaurant = if (!result.isEmpty()) result[0] else null
+                )
             )
         }
     }

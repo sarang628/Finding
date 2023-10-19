@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.cardinfo.RestaurantCardData
 import com.example.cardinfo.RestaurantCardPage
@@ -119,10 +120,10 @@ fun RemoteRestaurant.toRestaurantInfo(): RestaurantInfo {
 
 @Composable
 fun Finding(
-    findingViewModel: FindingViewModel,
-    restaurantCardViewModel: RestaurantCardViewModel,
-    filterViewModel: FilterViewModel,
-    mapViewModel: MapViewModel,
+    findingViewModel: FindingViewModel = hiltViewModel(),
+    restaurantCardViewModel: RestaurantCardViewModel = hiltViewModel(),
+    filterViewModel: FilterViewModel = hiltViewModel(),
+    mapViewModel: MapViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
     val uiState by findingViewModel.uiState.collectAsState()
@@ -179,21 +180,23 @@ fun Finding(
                 findingViewModel.filter(it.toFilter())
             })
         },
-        myLocation = { CurrentLocationScreen(onLocation = {
-            findingViewModel.setCurrentLocation(it)
-            coroutineScope.launch {
-                cameraPositionState.animate(
-                    update = CameraUpdateFactory.newLatLng(
-                        LatLng(
-                            it.latitude,
-                            it.longitude
-                        )
-                    ),
-                    300
-                )
+        myLocation = {
+            CurrentLocationScreen(onLocation = {
+                findingViewModel.setCurrentLocation(it)
+                coroutineScope.launch {
+                    cameraPositionState.animate(
+                        update = CameraUpdateFactory.newLatLng(
+                            LatLng(
+                                it.latitude,
+                                it.longitude
+                            )
+                        ),
+                        300
+                    )
+                }
             }
+            )
         }
-        ) }
     )
 }
 

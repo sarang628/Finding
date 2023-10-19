@@ -34,11 +34,6 @@ import kotlin.streams.toList
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val mapViewModel: MapViewModel by viewModels()
-    private val restaurantCardViewModel: RestaurantCardViewModel by viewModels()
-    private val filterViewModel: FilterViewModel by viewModels()
-    private val findingViewModel: FindingViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -46,10 +41,6 @@ class MainActivity : ComponentActivity() {
             NavHost(navController = navController, startDestination = "finding") {
                 composable("finding") {
                     Finding(
-                        findingViewModel = findingViewModel,
-                        restaurantCardViewModel = restaurantCardViewModel,
-                        filterViewModel = filterViewModel,
-                        mapViewModel = mapViewModel,
                         navController = navController
                     )
                 }

@@ -123,7 +123,6 @@ fun Finding(
     findingViewModel: FindingViewModel = hiltViewModel(),
     restaurantCardViewModel: RestaurantCardViewModel = hiltViewModel(),
     filterViewModel: FilterViewModel = hiltViewModel(),
-    mapViewModel: MapViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
     val uiState by findingViewModel.uiState.collectAsState()
@@ -149,7 +148,6 @@ fun Finding(
         mapScreen = {
             Box {
                 MapScreen(
-                    mapViewModel = mapViewModel,
                     onMark = {
                         isMovingByMarkerClick = true
                         findingViewModel.selectMarker(it)

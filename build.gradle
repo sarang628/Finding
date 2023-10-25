@@ -25,6 +25,6 @@ ext {
     cardInfoVersion = '5a4bbcbb1a'
     mapVersion = 'fb272a7ab3'
     filterVersion = '35d906e5ee'
-    dataVersion = '5e905f6f1f'
+    dataVersion = '317ca44396'
     torangRepositoryVersion = 'ade4ba5d8d'
 }

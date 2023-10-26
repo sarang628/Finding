@@ -22,7 +22,6 @@ import com.example.screen_finding.finding.FindingViewModel
 import com.example.screen_finding.finding.RestaurantInfo
 import com.example.screen_map.CurrentLocationScreen
 import com.example.screen_map.MapScreen
-import com.example.screen_map.MapViewModel
 import com.example.screen_map.MarkerData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
@@ -129,12 +128,12 @@ fun Finding(
     val cameraPositionState = rememberCameraPositionState()
     val coroutineScope = rememberCoroutineScope()
     var isMovingByMarkerClick by remember { mutableStateOf(false) }
+    var isVisible by remember { mutableStateOf(true) }
 
 
     FindScreen(
         restaurantCardPage = {
             RestaurantCardPage(
-                uiState = restaurantCardViewModel.uiState,
                 restaurants = uiState.restaurants.stream().map { it.toRestaurantCardData() }
                     .toList(),
                 restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/",
@@ -142,7 +141,8 @@ fun Finding(
                     findingViewModel.selectPage(page)
                 },
                 onClickCard = { navController.navigate("restaurant/$it") },
-                selectedRestaurant = uiState.selectedRestaurant?.toRestaurantCardData()
+                selectedRestaurant = uiState.selectedRestaurant?.toRestaurantCardData(),
+                visible = isVisible
             )
         },
         mapScreen = {
@@ -159,7 +159,11 @@ fun Finding(
                     cameraPositionState = cameraPositionState,
                     list = uiState.restaurants.stream().map { it.toMarkData() }.toList(),
                     selectedMarkerData = uiState.selectedRestaurant?.toMarkData(),
-                    currentLocation = uiState.currentLocation
+                    currentLocation = uiState.currentLocation,
+                    onMapClick = {
+                        isVisible = !isVisible
+                        Log.d("Finding", "onMapClick $isVisible")
+                    }
                 )
             }
         },

@@ -14,9 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.screen_map.MapScreen
-import com.example.screen_map.MapViewModel
-import com.sryang.screen_filter.ui.Filter
 
 @Composable
 fun FindScreen(

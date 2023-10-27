@@ -26,7 +26,7 @@ import com.example.screen_map.MarkerData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.sryang.screen_filter.ui.Filter
+import com.sryang.screen_filter.ui.FilterScreen
 import com.sryang.screen_filter.ui.FilterUiState
 import com.sryang.screen_filter.ui.FilterViewModel
 import com.sryang.torang_repository.api.ApiRestaurant
@@ -51,7 +51,7 @@ class FindingServiceModule {
                 }.toList()
             }
 
-            override suspend fun filter(filter: com.example.screen_finding.finding.Filter): List<RestaurantInfo> {
+            override suspend fun filter(filter: Filter): List<RestaurantInfo> {
                 return apiRestaurant.getFilterRestaurant(
                     filter = filter.toFilter()
                 )
@@ -63,7 +63,7 @@ class FindingServiceModule {
     }
 }
 
-fun com.example.screen_finding.finding.Filter.toFilter(): com.sryang.torang_repository.data.Filter {
+fun Filter.toFilter(): com.sryang.torang_repository.data.Filter {
     return com.sryang.torang_repository.data.Filter(
         restaurantTypes = this.restaurantTypes?.stream()?.map { it.uppercase() }?.toList(),
         prices = this.prices,
@@ -150,6 +150,7 @@ fun Finding(
                 MapScreen(
                     onMark = {
                         isMovingByMarkerClick = true
+                        isVisible = true
                         findingViewModel.selectMarker(it)
                     },
                     onIdle = {
@@ -178,9 +179,9 @@ fun Finding(
             }
         },
         filter = {
-            Filter(filterViewModel = filterViewModel, onFilter = {
+            FilterScreen(filterViewModel = filterViewModel, onFilter = {
                 findingViewModel.filter(it.toFilter())
-            })
+            }, visible = isVisible)
         },
         myLocation = {
             CurrentLocationScreen(onLocation = {

@@ -64,10 +64,4 @@ dependencies {
 
     // hiltViewModel
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
-
-    implementation "com.github.sarang628:Map:$mapVersion"
-    implementation "com.github.sarang628:Filter:$filterVersion"
-    implementation "com.github.sarang628:Theme:$themeVersion"
-
-    implementation "com.github.sarang628:Data:$dataVersion"
 }

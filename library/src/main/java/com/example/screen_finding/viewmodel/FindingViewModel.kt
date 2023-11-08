@@ -1,9 +1,11 @@
-package com.example.screen_finding.finding
+package com.example.screen_finding.viewmodel
 
 import android.location.Location
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.screen_finding.usecase.FindingService
+import com.example.screen_finding.uistate.FindingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

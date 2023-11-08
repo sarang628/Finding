@@ -1,6 +1,7 @@
-package com.example.screen_finding.finding
+package com.example.screen_finding.uistate
 
 import android.location.Location
+import com.example.screen_finding.data.RestaurantInfo
 
 data class FindingUiState(
     val restaurants: List<RestaurantInfo>,

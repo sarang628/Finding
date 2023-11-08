@@ -15,11 +15,11 @@ import androidx.navigation.NavHostController
 import com.example.cardinfo.RestaurantCardData
 import com.example.cardinfo.RestaurantCardPage
 import com.example.cardinfo.RestaurantCardViewModel
-import com.example.screen_finding.finding.Filter
-import com.example.screen_finding.finding.FindScreen
-import com.example.screen_finding.finding.FindingService
-import com.example.screen_finding.finding.FindingViewModel
-import com.example.screen_finding.finding.RestaurantInfo
+import com.example.screen_finding.viewmodel.Filter
+import com.example.screen_finding.ui.FindScreen
+import com.example.screen_finding.usecase.FindingService
+import com.example.screen_finding.viewmodel.FindingViewModel
+import com.example.screen_finding.data.RestaurantInfo
 import com.example.screen_map.CurrentLocationScreen
 import com.example.screen_map.MapScreen
 import com.example.screen_map.MarkerData
@@ -227,7 +227,7 @@ fun RestaurantInfo.toMarkData(): MarkerData {
 }
 
 fun FilterUiState.toFilter(): Filter {
-    return com.example.screen_finding.finding.Filter(
+    return Filter(
         restaurantTypes = if (this.foodType.isEmpty()) null else foodType,
         prices = if (price.isEmpty()) null else price,
         ratings = if (rating.isEmpty()) null else rating,

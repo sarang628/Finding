@@ -9,6 +9,7 @@ import com.example.screen_finding.uistate.FindingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,38 +23,38 @@ class FindingViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val result = findingService.findRestaurants()
-            _uiState.emit(
-                uiState.value.copy(
+            _uiState.update {
+                it.copy(
                     restaurants = result,
                     selectedRestaurant = if (!result.isEmpty()) result[0] else null
                 )
-            )
+            }
         }
     }
 
     fun filter(filter: Filter) {
         viewModelScope.launch {
             val result = findingService.filter(filter)
-            _uiState.emit(
-                uiState.value.copy(
+            _uiState.update {
+                it.copy(
                     restaurants = result,
                     selectedRestaurant = if (!result.isEmpty()) result[0] else null
                 )
-            )
+            }
+
+
         }
     }
 
     fun selectMarker(restaurantId: Int) {
-        Log.d("FindingViewModel", "selectMarker:$restaurantId")
         viewModelScope.launch {
             val selectedRestaurant =
                 _uiState.value.restaurants.find { it.restaurantId == restaurantId }
-            Log.d("FindingViewModel", "selectMarker:$selectedRestaurant")
-            _uiState.emit(
+            _uiState.update {
                 uiState.value.copy(
                     selectedRestaurant = selectedRestaurant
                 )
-            )
+            }
         }
     }
 
@@ -61,24 +62,22 @@ class FindingViewModel @Inject constructor(
         viewModelScope.launch {
             if (_uiState.value.restaurants.size - 1 < page)
                 return@launch
-
             val selectedRestaurant = _uiState.value.restaurants[page]
-            Log.d("FindingViewModel", "selectPage:$selectedRestaurant")
-            _uiState.emit(
+            _uiState.update {
                 uiState.value.copy(
                     selectedRestaurant = selectedRestaurant
                 )
-            )
+            }
         }
     }
 
-    fun setCurrentLocation(it: Location) {
+    fun setCurrentLocation(location: Location) {
         viewModelScope.launch {
-            _uiState.emit(
-                uiState.value.copy(
-                    currentLocation = it
+            _uiState.update {
+                it.copy(
+                    currentLocation = location
                 )
-            )
+            }
         }
     }
 }

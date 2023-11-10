@@ -68,17 +68,23 @@ fun Filter.toFilter(): com.sryang.torang_repository.data.Filter {
         restaurantTypes = this.restaurantTypes?.stream()?.map { it.uppercase() }?.toList(),
         prices = this.prices,
         ratings = this.ratings?.toRating(),
-        distances = this.distances?.toDistnace()
+        distances = this.distances?.toDistnace(),
+        lat = this.lat,
+        lon = this.lon,
+        north = this.north,
+        south = this.south,
+        east = this.east,
+        west = this.west
     )
 }
 
 fun String.toDistnace(): String? {
     if (this == "100m")
         return "_100M"
-    else if (this == "200m")
-        return "_200M"
     else if (this == "300m")
         return "_300M"
+    else if (this == "500m")
+        return "_500M"
     else if (this == "1km")
         return "_1KM"
     else if (this == "3km")

@@ -1,11 +1,11 @@
 package com.example.screen_finding.viewmodel
 
 import android.location.Location
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.screen_finding.usecase.FindingService
 import com.example.screen_finding.uistate.FindingUiState
+import com.example.screen_finding.usecase.SearchThisAreaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,22 +15,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FindingViewModel @Inject constructor(
-    val findingService: FindingService
+    val findingService: FindingService,
+    val searchThisAreaUseCase: SearchThisAreaUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(FindingUiState(ArrayList()))
     val uiState = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            val result = findingService.findRestaurants()
-            _uiState.update {
-                it.copy(
-                    restaurants = result,
-                    selectedRestaurant = if (!result.isEmpty()) result[0] else null
-                )
-            }
-        }
-    }
 
     fun filter(filter: Filter) {
         viewModelScope.launch {
@@ -41,8 +30,6 @@ class FindingViewModel @Inject constructor(
                     selectedRestaurant = if (!result.isEmpty()) result[0] else null
                 )
             }
-
-
         }
     }
 
@@ -76,6 +63,19 @@ class FindingViewModel @Inject constructor(
             _uiState.update {
                 it.copy(
                     currentLocation = location
+                )
+            }
+        }
+    }
+
+    fun findThisArea(filter: Filter) {
+        viewModelScope.launch {
+            //필터화면에서 보내주는 정보는 맵의 visibleBound를 가지고 있지 않아 usecase에서 mapRepository와 함께 사용하여 처리
+            val result = searchThisAreaUseCase.invoke(filter = filter)
+            _uiState.update {
+                it.copy(
+                    restaurants = result,
+                    selectedRestaurant = if (!result.isEmpty()) result[0] else null
                 )
             }
         }

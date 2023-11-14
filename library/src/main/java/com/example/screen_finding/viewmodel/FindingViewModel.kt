@@ -3,7 +3,7 @@ package com.example.screen_finding.viewmodel
 import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.screen_finding.usecase.FindingService
+import com.example.screen_finding.usecase.FindRestaurantUseCase
 import com.example.screen_finding.uistate.FindingUiState
 import com.example.screen_finding.usecase.SearchThisAreaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,15 +15,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FindingViewModel @Inject constructor(
-    val findingService: FindingService,
-    val searchThisAreaUseCase: SearchThisAreaUseCase
+    private val findRestaurantUseCase: FindRestaurantUseCase,
+    private val searchThisAreaUseCase: SearchThisAreaUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(FindingUiState(ArrayList()))
     val uiState = _uiState.asStateFlow()
 
     fun filter(filter: Filter) {
         viewModelScope.launch {
-            val result = findingService.filter(filter)
+            val result = findRestaurantUseCase.filter(filter)
             _uiState.update {
                 it.copy(
                     restaurants = result,

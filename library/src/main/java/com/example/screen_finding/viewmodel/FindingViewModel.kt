@@ -38,7 +38,7 @@ class FindingViewModel @Inject constructor(
             val selectedRestaurant =
                 _uiState.value.restaurants.find { it.restaurantId == restaurantId }
             _uiState.update {
-                uiState.value.copy(
+                it.copy(
                     selectedRestaurant = selectedRestaurant
                 )
             }
@@ -51,7 +51,7 @@ class FindingViewModel @Inject constructor(
                 return@launch
             val selectedRestaurant = _uiState.value.restaurants[page]
             _uiState.update {
-                uiState.value.copy(
+                it.copy(
                     selectedRestaurant = selectedRestaurant
                 )
             }
@@ -79,6 +79,10 @@ class FindingViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun clearErrorMessage() {
+        _uiState.update { it.copy(errorMessage = null) }
     }
 }
 

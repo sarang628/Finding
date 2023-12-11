@@ -23,24 +23,30 @@ class FindingViewModel @Inject constructor(
 
     fun filter(filter: Filter) {
         viewModelScope.launch {
-            val result = findRestaurantUseCase.filter(filter)
-            _uiState.update {
-                it.copy(
-                    restaurants = result,
-                    selectedRestaurant = if (!result.isEmpty()) result[0] else null
-                )
+            try {
+                val result = findRestaurantUseCase.filter(filter)
+                _uiState.update {
+                    it.copy(
+                        restaurants = result,
+                        selectedRestaurant = if (!result.isEmpty()) result[0] else null
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(errorMessage = e.message) }
             }
         }
     }
 
     fun selectMarker(restaurantId: Int) {
         viewModelScope.launch {
-            val selectedRestaurant =
-                _uiState.value.restaurants.find { it.restaurantId == restaurantId }
-            _uiState.update {
-                uiState.value.copy(
-                    selectedRestaurant = selectedRestaurant
-                )
+            try {
+                val selectedRestaurant =
+                    _uiState.value.restaurants.find { it.restaurantId == restaurantId }
+                _uiState.update {
+                    it.copy(selectedRestaurant = selectedRestaurant)
+                }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(errorMessage = e.message) }
             }
         }
     }
@@ -51,9 +57,7 @@ class FindingViewModel @Inject constructor(
                 return@launch
             val selectedRestaurant = _uiState.value.restaurants[page]
             _uiState.update {
-                uiState.value.copy(
-                    selectedRestaurant = selectedRestaurant
-                )
+                it.copy(selectedRestaurant = selectedRestaurant)
             }
         }
     }
@@ -61,24 +65,30 @@ class FindingViewModel @Inject constructor(
     fun setCurrentLocation(location: Location) {
         viewModelScope.launch {
             _uiState.update {
-                it.copy(
-                    currentLocation = location
-                )
+                it.copy(currentLocation = location)
             }
         }
     }
 
     fun findThisArea(filter: Filter) {
         viewModelScope.launch {
-            //필터화면에서 보내주는 정보는 맵의 visibleBound를 가지고 있지 않아 usecase에서 mapRepository와 함께 사용하여 처리
-            val result = searchThisAreaUseCase.invoke(filter = filter)
-            _uiState.update {
-                it.copy(
-                    restaurants = result,
-                    selectedRestaurant = if (!result.isEmpty()) result[0] else null
-                )
+            try {
+                //필터화면에서 보내주는 정보는 맵의 visibleBound를 가지고 있지 않아 usecase에서 mapRepository와 함께 사용하여 처리
+                val result = searchThisAreaUseCase.invoke(filter = filter)
+                _uiState.update {
+                    it.copy(
+                        restaurants = result,
+                        selectedRestaurant = if (!result.isEmpty()) result[0] else null
+                    )
+                }
+            }catch (e: Exception) {
+                _uiState.update { it.copy(errorMessage = e.message) }
             }
         }
+    }
+
+    fun clearErrorMessage() {
+        _uiState.update { it.copy(errorMessage = null) }
     }
 }
 

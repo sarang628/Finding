@@ -36,7 +36,7 @@ class FindingViewModel @Inject constructor(
     fun selectMarker(restaurantId: Int) {
         viewModelScope.launch {
             val selectedRestaurant =
-                _uiState.value.restaurants.find { it.restaurantId == restaurantId }
+                _uiState.value.restaurants?.find { it.restaurantId == restaurantId }
             _uiState.update {
                 it.copy(
                     selectedRestaurant = selectedRestaurant
@@ -47,9 +47,9 @@ class FindingViewModel @Inject constructor(
 
     fun selectPage(page: Int) {
         viewModelScope.launch {
-            if (_uiState.value.restaurants.size - 1 < page)
+            if ((_uiState.value.restaurants?.size ?: 0) - 1 < page)
                 return@launch
-            val selectedRestaurant = _uiState.value.restaurants[page]
+            val selectedRestaurant = _uiState.value.restaurants?.get(page)
             _uiState.update {
                 it.copy(
                     selectedRestaurant = selectedRestaurant
@@ -71,12 +71,20 @@ class FindingViewModel @Inject constructor(
     fun findThisArea(filter: Filter) {
         viewModelScope.launch {
             //필터화면에서 보내주는 정보는 맵의 visibleBound를 가지고 있지 않아 usecase에서 mapRepository와 함께 사용하여 처리
-            val result = searchThisAreaUseCase.invoke(filter = filter)
-            _uiState.update {
-                it.copy(
-                    restaurants = result,
-                    selectedRestaurant = if (!result.isEmpty()) result[0] else null
-                )
+            try {
+                val result = searchThisAreaUseCase.invoke(filter = filter)
+                _uiState.update {
+                    it.copy(
+                        restaurants = result,
+                        selectedRestaurant = if (!result.isEmpty()) result[0] else null
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        errorMessage = e.toString()
+                    )
+                }
             }
         }
     }

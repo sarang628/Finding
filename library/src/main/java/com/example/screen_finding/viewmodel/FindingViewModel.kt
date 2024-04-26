@@ -26,8 +26,7 @@ class FindingViewModel @Inject constructor(
             val result = findRestaurantUseCase.filter(filter)
             _uiState.update {
                 it.copy(
-                    restaurants = result,
-                    selectedRestaurant = if (!result.isEmpty()) result[0] else null
+                    restaurants = result
                 )
             }
         }
@@ -75,8 +74,7 @@ class FindingViewModel @Inject constructor(
                 val result = searchThisAreaUseCase.invoke(filter = filter)
                 _uiState.update {
                     it.copy(
-                        restaurants = result,
-                        selectedRestaurant = if (!result.isEmpty()) result[0] else null
+                        restaurants = result
                     )
                 }
             } catch (e: Exception) {

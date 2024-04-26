@@ -3,6 +3,7 @@ package com.example.screen_finding.viewmodel
 import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.screen_finding.data.RestaurantInfo
 import com.example.screen_finding.usecase.FindRestaurantUseCase
 import com.example.screen_finding.uistate.FindingUiState
 import com.example.screen_finding.usecase.SearchThisAreaUseCase
@@ -89,6 +90,10 @@ class FindingViewModel @Inject constructor(
 
     fun clearErrorMessage() {
         _uiState.update { it.copy(errorMessage = null) }
+    }
+
+    fun findPositionByRestaurantId(restaurantId: Int): RestaurantInfo? {
+        return _uiState.value.restaurants?.find { it.restaurantId == restaurantId }
     }
 }
 

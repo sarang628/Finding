@@ -24,13 +24,22 @@ class FindingViewModel @Inject constructor(
 
     fun filter(filter: Filter) {
         viewModelScope.launch {
-            val result = findRestaurantUseCase.filter(filter)
-            _uiState.update {
-                it.copy(
-                    restaurants = result
-                )
+            try {
+                val result = findRestaurantUseCase.filter(filter)
+                _uiState.update {
+                    it.copy(
+                        restaurants = result,
+                        errorMessage = if (result.isEmpty()) "No results were found" else null
+                    )
+                }
+            } catch (e: Exception) {
+                handleException(e)
             }
         }
+    }
+
+    fun handleException(e: Exception) {
+        _uiState.update { it.copy(errorMessage = e.message) }
     }
 
     fun selectMarker(restaurantId: Int) {
@@ -75,15 +84,12 @@ class FindingViewModel @Inject constructor(
                 val result = searchThisAreaUseCase.invoke(filter = filter)
                 _uiState.update {
                     it.copy(
-                        restaurants = result
+                        restaurants = result,
+                        errorMessage = if (result.isEmpty()) "No results were found" else null
                     )
                 }
             } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(
-                        errorMessage = e.toString()
-                    )
-                }
+                handleException(e)
             }
         }
     }

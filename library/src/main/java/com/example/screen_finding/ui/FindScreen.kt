@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.util.logging.ErrorManager
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FindScreen(
     errorMessage: String? = null,

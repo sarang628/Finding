@@ -4,8 +4,9 @@ import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.screen_finding.data.RestaurantInfo
-import com.example.screen_finding.usecase.FindRestaurantUseCase
 import com.example.screen_finding.uistate.FindingUiState
+import com.example.screen_finding.usecase.FindRestaurantUseCase
+import com.example.screen_finding.usecase.SearchByKeywordUseCase
 import com.example.screen_finding.usecase.SearchThisAreaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FindingViewModel @Inject constructor(
     private val findRestaurantUseCase: FindRestaurantUseCase,
-    private val searchThisAreaUseCase: SearchThisAreaUseCase
+    private val searchThisAreaUseCase: SearchThisAreaUseCase,
+    private val searchByKeywordUseCase: SearchByKeywordUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(FindingUiState(ArrayList()))
     val uiState = _uiState.asStateFlow()
@@ -101,6 +103,18 @@ class FindingViewModel @Inject constructor(
     fun findPositionByRestaurantId(restaurantId: Int): RestaurantInfo? {
         return _uiState.value.restaurants?.find { it.restaurantId == restaurantId }
     }
+
+    fun onSearch(it: Filter) {
+        viewModelScope.launch {
+            val result = searchByKeywordUseCase.invoke(it)
+            _uiState.update {
+                it.copy(
+                    restaurants = result,
+                    errorMessage = if (result.isEmpty()) "No results were found" else null
+                )
+            }
+        }
+    }
 }
 
 data class Filter(
@@ -115,5 +129,5 @@ data class Filter(
     var north: Double = 0.0,
     var east: Double = 0.0,
     var south: Double = 0.0,
-    var west: Double = 0.0
+    var west: Double = 0.0,
 )

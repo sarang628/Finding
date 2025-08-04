@@ -149,5 +149,6 @@ dependencies {
     implementation(libs.cardInfo)
     implementation(libs.map)
     implementation(libs.filter)
+    implementation(libs.commonImageLoader)
     implementation(project(":library"))
 }

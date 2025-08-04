@@ -8,81 +8,46 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import java.util.logging.ErrorManager
 
 @Composable
 fun FindScreen(
-    errorMessage: String? = null,
-    consumeErrorMessage : (()->Unit)? = null,
     onZoomIn: () -> Unit,
     onZoomOut: () -> Unit,
     restaurantCardPage: @Composable () -> Unit,
     mapScreen: @Composable () -> Unit,
     filter: @Composable () -> Unit,
     myLocation: @Composable () -> Unit,
+    buttonBottomPadding : Dp = 24.dp
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    LaunchedEffect(key1 = errorMessage, block = {
-        errorMessage?.let {
-            snackbarHostState.showSnackbar(it, duration = SnackbarDuration.Short)
-            consumeErrorMessage?.invoke()
-        }
-    })
-
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
-    ) {
-        Box(Modifier.padding(it)) {
-            mapScreen.invoke() // 지도화면
-            filter.invoke() // 필터화면
-            Column(
-                Modifier.align(Alignment.BottomEnd),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.End
-            ) {
-                // 지도 확대, 축소, 내위치 버튼
-                Buttons(onZoomIn = onZoomIn, onZoomOut = onZoomOut, myLocation = myLocation)
-                restaurantCardPage.invoke() // 카드 페이지
-            }
+    Box {
+        mapScreen.invoke() // 지도화면
+        filter.invoke() // 필터화면
+        Column(Modifier.align(Alignment.BottomEnd), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.End) {
+            // 지도 확대, 축소, 내위치 버튼
+            Buttons(modifier = Modifier.padding(bottom = buttonBottomPadding), onZoomIn = onZoomIn, onZoomOut = onZoomOut, myLocation = myLocation)
+            restaurantCardPage.invoke() // 카드 페이지
         }
     }
 }
 
+@Preview
 @Composable
-fun Buttons(
-    onZoomIn: () -> Unit,
-    onZoomOut: () -> Unit,
-    myLocation: @Composable () -> Unit,
-) {
-    Row(
-        Modifier
-            .padding(end = 8.dp)
-            .fillMaxWidth()
-    ) {
+fun Buttons(modifier : Modifier = Modifier, onZoomIn: () -> Unit = {}, onZoomOut: () -> Unit = {}, myLocation: @Composable () -> Unit = {} ) {
+    Row(modifier.padding(end = 8.dp ).fillMaxWidth()) {
         Spacer(modifier = Modifier.weight(1f))
-        Button(onClick = { onZoomIn.invoke() }) {
-            Text(text = "+")
-        }
+        IconButton(onZoomIn){ Icon(Icons.Rounded.Add, "") }
         Spacer(modifier = Modifier.width(8.dp))
-        Button(onClick = { onZoomOut.invoke() }) {
-            Text(text = "-")
-        }
+        IconButton(onZoomOut){ Icon(Icons.Rounded.Add, "") }
         Spacer(modifier = Modifier.width(8.dp))
         myLocation.invoke()
     }

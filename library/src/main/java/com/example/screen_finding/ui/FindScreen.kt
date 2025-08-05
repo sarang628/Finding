@@ -19,16 +19,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+/**
+ * @param onZoomIn 줌인 클릭
+ * @param onZoomOut 줌아웃 클릭
+ * @param restaurantCardPage 음식점 카드 페이지
+ * @param mapScreen 맵
+ * @param filter 필터
+ * @param myLocation 내 위치 버튼
+ * @param buttonBottomPadding 하단 패딩
+ */
 @Composable
-fun FindScreen(
-    onZoomIn: () -> Unit,
-    onZoomOut: () -> Unit,
-    restaurantCardPage: @Composable () -> Unit,
-    mapScreen: @Composable () -> Unit,
-    filter: @Composable () -> Unit,
-    myLocation: @Composable () -> Unit,
-    buttonBottomPadding : Dp = 24.dp
-) {
+fun FindScreen(onZoomIn: () -> Unit, onZoomOut: () -> Unit, restaurantCardPage: @Composable () -> Unit, mapScreen: @Composable () -> Unit, filter: @Composable () -> Unit, myLocation: @Composable () -> Unit, buttonBottomPadding : Dp = 24.dp) {
     Box {
         mapScreen.invoke() // 지도화면
         filter.invoke() // 필터화면

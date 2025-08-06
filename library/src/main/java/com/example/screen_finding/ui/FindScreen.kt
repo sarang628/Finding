@@ -12,12 +12,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 /**
  * @param onZoomIn 줌인 클릭
@@ -46,9 +48,9 @@ fun FindScreen(onZoomIn: () -> Unit, onZoomOut: () -> Unit, restaurantCardPage: 
 fun Buttons(modifier : Modifier = Modifier, onZoomIn: () -> Unit = {}, onZoomOut: () -> Unit = {}, myLocation: @Composable () -> Unit = {} ) {
     Row(modifier.padding(end = 8.dp ).fillMaxWidth()) {
         Spacer(modifier = Modifier.weight(1f))
-        IconButton(onZoomIn){ Icon(Icons.Rounded.Add, "") }
+        IconButton(onZoomIn){ Text("+", fontSize = 30.sp) }
         Spacer(modifier = Modifier.width(8.dp))
-        IconButton(onZoomOut){ Icon(Icons.Rounded.Add, "") }
+        IconButton(onZoomOut){ Text("-", fontSize = 35.sp) }
         Spacer(modifier = Modifier.width(8.dp))
         myLocation.invoke()
     }

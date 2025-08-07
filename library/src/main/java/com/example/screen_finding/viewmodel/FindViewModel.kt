@@ -17,41 +17,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FindingViewModel @Inject constructor(
-    private val findRestaurantUseCase: FindRestaurantUseCase,
+class FindViewModel @Inject constructor(
     private val searchThisAreaUseCase: SearchThisAreaUseCase,
     private val searchByKeywordUseCase: SearchByKeywordUseCase,
 ) : ViewModel() {
     var uiState by mutableStateOf(FindingUiState())
         private set
 
-    fun filter(filter: Filter) {
-        viewModelScope.launch {
-            try {
-                val result = findRestaurantUseCase.filter(filter)
-                uiState = uiState.copy(restaurants = result, errorMessage = if (result.isEmpty()) "No results were found" else null)
-            } catch (e: Exception) { handleException(e) }
-        }
-    }
+    fun handleException(e: Exception) { uiState = uiState.copy(errorMessage = e.message) }
 
-    fun handleException(e: Exception) {
-        uiState = uiState.copy(errorMessage = e.message)
-    }
+    fun selectMarker(restaurantId: Int) {}
 
-    fun selectMarker(restaurantId: Int) {
-        viewModelScope.launch {
-            val selectedRestaurant = uiState.restaurants.find { it.restaurantId == restaurantId }
-            uiState = uiState.copy(selectedRestaurant = selectedRestaurant)
-        }
-    }
-
-    fun selectPage(page: Int) {
-        viewModelScope.launch {
-            if (uiState.restaurants.size - 1 < page) return@launch
-            val selectedRestaurant = uiState.restaurants.get(page)
-            uiState = uiState.copy(selectedRestaurant = selectedRestaurant)
-        }
-    }
+    fun selectPage(page: Int) {}
 
     fun setCurrentLocation(location: Location) {
         viewModelScope.launch { uiState = uiState.copy(currentLocation = location) }
@@ -65,19 +42,14 @@ class FindingViewModel @Inject constructor(
         }
     }
 
-    fun clearErrorMessage() {
-        uiState =  uiState.copy(errorMessage = null)
-    }
-
-    fun findPositionByRestaurantId(restaurantId: Int): RestaurantInfo? {
-        return uiState.restaurants.find { it.restaurantId == restaurantId }
-    }
+    fun clearErrorMessage() { uiState =  uiState.copy(errorMessage = null) }
+    fun findPositionByRestaurantId(restaurantId: Int): RestaurantInfo? { return null }
 
     fun onSearch(it: Filter) {
         viewModelScope.launch {
             try {
                 val result = searchByKeywordUseCase.invoke(it)
-                uiState = uiState.copy(restaurants = result, errorMessage = if (result.isEmpty()) "No results were found" else null)
+                uiState = uiState.copy(errorMessage = if (result.isEmpty()) "No results were found" else null)
             }catch (e : Exception){ Log.e("__FindingViewModel", e.toString()) }
         }
     }

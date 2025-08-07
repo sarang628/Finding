@@ -10,7 +10,6 @@ import com.example.screen_finding.data.RestaurantInfo
  * @param errorMessage 에러메시지
  */
 data class FindingUiState(
-    val restaurants: List<RestaurantInfo> = listOf(),
     val selectedRestaurant: RestaurantInfo? = null,
     val currentLocation : Location? = null,
     val errorMessage : String? = null,

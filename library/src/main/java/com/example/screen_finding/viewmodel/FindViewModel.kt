@@ -13,9 +13,6 @@ import com.example.screen_finding.usecase.FindRestaurantUseCase
 import com.example.screen_finding.usecase.SearchByKeywordUseCase
 import com.example.screen_finding.usecase.SearchThisAreaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -62,9 +59,8 @@ class FindingViewModel @Inject constructor(
 
     fun findThisArea(filter: Filter) {
         viewModelScope.launch {
-            try {//필터화면에서 보내주는 정보는 맵의 visibleBound를 가지고 있지 않아 usecase에서 mapRepository와 함께 사용하여 처리
-                val result = searchThisAreaUseCase.invoke(filter = filter)
-                uiState = uiState.copy(restaurants = result, errorMessage = if (result.isEmpty()) "No results were found" else null)
+            try {
+                searchThisAreaUseCase.invoke(filter = filter)
             } catch (e: Exception) { handleException(e) }
         }
     }

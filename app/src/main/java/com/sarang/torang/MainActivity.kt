@@ -7,7 +7,8 @@ import androidx.compose.material3.Text
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.di.finding_di.Finding
+import com.sarang.torang.di.finding_di.FindingWithPermission
+import com.sryang.library.compose.workflow.BestPracticeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +20,7 @@ class MainActivity : ComponentActivity() {
             NavHost(navController = navController, startDestination = "finding") {
                 composable("finding") {
                     val navController = RootNavController()
-                    Finding(navController = navController)
+                    //FindingWithPermission(navController = navController, viewModel = BestPracticeViewModel())
                 }
                 composable("restaurant/{restaurantId}") {
                     Text(text = "")

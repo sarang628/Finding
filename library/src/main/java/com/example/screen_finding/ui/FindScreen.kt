@@ -33,7 +33,7 @@ fun FindScreen(onZoomIn: () -> Unit, onZoomOut: () -> Unit, restaurantCardPage: 
     Box {
         mapScreen.invoke() // 지도화면
         filter.invoke() // 필터화면
-        Column(Modifier.align(Alignment.BottomEnd), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.End) {
+        Column(Modifier.align(Alignment.BottomCenter), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
             // 지도 확대, 축소, 내위치 버튼
             Buttons(modifier = Modifier.padding(bottom = buttonBottomPadding), onZoomIn = onZoomIn, onZoomOut = onZoomOut, myLocation = myLocation)
             Box(modifier = Modifier.onSizeChanged{
@@ -47,8 +47,8 @@ fun FindScreen(onZoomIn: () -> Unit, onZoomOut: () -> Unit, restaurantCardPage: 
 @Preview
 @Composable
 fun Buttons(modifier : Modifier = Modifier, onZoomIn: () -> Unit = {}, onZoomOut: () -> Unit = {}, myLocation: @Composable () -> Unit = {} ) {
-    Row(modifier.padding(end = 8.dp ).fillMaxWidth()) {
-        Spacer(modifier = Modifier.weight(1f))
+    Row(modifier.padding(end = 8.dp )) {
+
         AssistChip(onZoomIn, label = {Text("+", fontSize = 30.sp)})
         Spacer(modifier = Modifier.width(8.dp))
         AssistChip(onZoomOut, label = { Text("-", fontSize = 30.sp) })

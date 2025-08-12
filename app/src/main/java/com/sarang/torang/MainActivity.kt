@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
             NavHost(navController = navController, startDestination = "finding") {
                 composable("finding") {
                     val navController = RootNavController()
-                    //FindingWithPermission(navController = navController, viewModel = BestPracticeViewModel())
+                    FindingWithPermission(navController = navController, viewModel = BestPracticeViewModel())
                 }
                 composable("restaurant/{restaurantId}") {
                     Text(text = "")

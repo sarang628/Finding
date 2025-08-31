@@ -146,9 +146,12 @@ dependencies {
 
     implementation(libs.theme)
     implementation(libs.torangRepository)
+    implementation(libs.torangnetwork)
+    implementation(libs.torangdatabase)
     implementation(libs.cardInfo)
     implementation(libs.map)
     implementation(libs.filter)
     implementation(libs.commonImageLoader)
+    implementation(libs.restaurantListBottomSheet)
     implementation(project(":library"))
 }

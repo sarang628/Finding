@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.di.finding_di.FindingWithPermission
+import com.sarang.torang.di.finding_di.findingWithPermission
 import com.sryang.library.compose.workflow.BestPracticeViewModel
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
                                             sheetPeekHeight = 0.dp,
                                             modifier = Modifier.fillMaxSize()
                                         ) {
-                                            FindingWithPermission(navController = navController, viewModel = BestPracticeViewModel())
+                                            findingWithPermission(navController = navController, viewModel = BestPracticeViewModel())
                                         }
                                     }
                                 }

@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.screen_finding.data.RestaurantInfo
 import com.example.screen_finding.uistate.FindingUiState
-import com.example.screen_finding.usecase.FindRestaurantUseCase
 import com.example.screen_finding.usecase.SearchByKeywordUseCase
 import com.example.screen_finding.usecase.SearchThisAreaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

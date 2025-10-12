@@ -1,11 +1,12 @@
 package com.example.screen_finding.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -33,17 +34,35 @@ import androidx.compose.ui.unit.sp
  * @param onMyLocation 내 위치 클릭
  */
 @Composable
-fun FindScreen(onZoomIn: () -> Unit, onZoomOut: () -> Unit, restaurantCardPage: @Composable () -> Unit, mapScreen: @Composable () -> Unit, filter: @Composable () -> Unit, buttonBottomPadding : Dp = 24.dp, onChangeRestaurantCardPageHeight : (Int) -> Unit = {}, onMyLocation : () -> Unit = {}) {
-    Box {
-        mapScreen.invoke() // 지도화면
-        filter.invoke() // 필터화면
-        Column(Modifier.align(Alignment.BottomCenter), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
-            // 지도 확대, 축소, 내위치 버튼
-            Buttons(modifier = Modifier.padding(bottom = buttonBottomPadding), onZoomIn = onZoomIn, onZoomOut = onZoomOut, onMyLocation = onMyLocation)
-            Box(modifier = Modifier.onSizeChanged{
-                onChangeRestaurantCardPageHeight.invoke(it.height)
-            }) {restaurantCardPage.invoke()} // 카드 페이지
-
+fun FindScreen(
+    modifier                         : Modifier                  = Modifier.fillMaxSize(),
+    tag                              : String                    = "__FindScreen",
+    buttonBottomPadding              : Dp                        = 24.dp,
+    onZoomIn                         : () -> Unit                = { Log.i(tag, "onZoomIn isn't set") },
+    onZoomOut                        : () -> Unit                = { Log.i(tag, "onZoomOut isn't set") },
+    restaurantCardPage               : @Composable () -> Unit    = { Log.i(tag, "restaurantCardPage isn't set"); Text("restaurantCardPage") },
+    mapScreen                        : @Composable () -> Unit    = { Log.i(tag, "mapScreen isn't set"); Text("mapScreen") },
+    filter                           : @Composable () -> Unit    = { Log.i(tag, "filter isn't set"); Text("filterScreen") },
+    onChangeRestaurantCardPageHeight : (Int) -> Unit             = { Log.i(tag, "onChangeRestaurantCardPageHeight isn't set") },
+    onMyLocation                     : () -> Unit                = { Log.i(tag, "onMyLocation isn't set") },
+) {
+    Box(modifier = modifier) {
+        mapScreen.invoke()  // 지도화면
+        filter.invoke()     // 필터화면
+        Column(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Buttons( // 지도 확대, 축소, 내위치 버튼
+                modifier = Modifier.padding(bottom = buttonBottomPadding),
+                onZoomIn = onZoomIn,
+                onZoomOut = onZoomOut,
+                onMyLocation = onMyLocation
+            )
+            Box(modifier = Modifier.onSizeChanged { onChangeRestaurantCardPageHeight.invoke(it.height) }) {
+                restaurantCardPage.invoke() // 카드 페이지
+            }
         }
     }
 }
@@ -59,4 +78,10 @@ fun Buttons(modifier : Modifier = Modifier, onZoomIn: () -> Unit = {}, onZoomOut
         Spacer(modifier = Modifier.width(8.dp))
         AssistChip(onMyLocation, label = { Icon(Icons.Default.LocationOn, "") })
     }
+}
+
+@Preview
+@Composable
+fun PreviewFindingScreen(){
+    FindScreen()
 }

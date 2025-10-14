@@ -8,7 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.screen_finding.data.RestaurantInfo
-import com.example.screen_finding.uistate.FindingUiState
+import com.example.screen_finding.uistate.FindUiState
 import com.example.screen_finding.usecase.SearchByKeywordUseCase
 import com.example.screen_finding.usecase.SearchThisAreaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,10 +20,10 @@ class FindViewModel @Inject constructor(
     private val searchThisAreaUseCase: SearchThisAreaUseCase,
     private val searchByKeywordUseCase: SearchByKeywordUseCase,
 ) : ViewModel() {
-    var uiState by mutableStateOf(FindingUiState())
+    var uiState by mutableStateOf(FindUiState())
         private set
 
-    fun handleException(e: Exception) { uiState = uiState.copy(errorMessage = e.message) }
+    fun handleException(e: Exception) { e.message?.let { uiState = uiState.addErrorMessage(it) } }
 
     fun selectMarker(restaurantId: Int) {}
 
@@ -41,17 +41,25 @@ class FindViewModel @Inject constructor(
         }
     }
 
-    fun clearErrorMessage() { uiState =  uiState.copy(errorMessage = null) }
+    fun clearErrorMessage() { uiState =  uiState.popErrorMessage() }
     fun findPositionByRestaurantId(restaurantId: Int): RestaurantInfo? { return null }
 
     fun onSearch(it: Filter) {
         viewModelScope.launch {
             try {
                 val result = searchByKeywordUseCase.invoke(it)
-                uiState = uiState.copy(errorMessage = if (result.isEmpty()) "No results were found" else null)
+                if (result.isEmpty()) uiState = uiState.addErrorMessage( "No results were found")
             }catch (e : Exception){ Log.e("__FindingViewModel", e.toString()) }
         }
     }
+}
+
+private fun FindUiState.addErrorMessage(string: String): FindUiState {
+    return this.copy(errorMessage = this.errorMessage + string)
+}
+
+private fun FindUiState.popErrorMessage(): FindUiState {
+    return this.copy(errorMessage = errorMessage.drop(0))
 }
 
 data class Filter(

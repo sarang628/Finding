@@ -1,7 +1,6 @@
 package com.example.screen_finding.uistate
 
 import android.location.Location
-import com.example.screen_finding.data.RestaurantInfo
 
 /**
  * @param restaurants 검색된 음식점 리스트
@@ -9,7 +8,7 @@ import com.example.screen_finding.data.RestaurantInfo
  * @param currentLocation 현재 내 위치
  * @param errorMessage 에러메시지
  */
-data class FindingUiState(
+data class FindUiState(
     val currentLocation : Location? = null,
-    val errorMessage : String? = null,
+    val errorMessage : List<String> = listOf(),
 )

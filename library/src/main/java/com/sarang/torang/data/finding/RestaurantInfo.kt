@@ -1,4 +1,4 @@
-package com.example.screen_finding.data
+package com.sarang.torang.data.finding
 
 data class RestaurantInfo(
     val restaurantId: Int,

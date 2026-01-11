@@ -48,7 +48,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtension.get()
     }
 
     compileOptions {
@@ -153,5 +153,6 @@ dependencies {
     implementation(libs.filter)
     implementation(libs.commonImageLoader)
     implementation(libs.restaurantListBottomSheet)
+    implementation(libs.coil)
     implementation(project(":library"))
 }

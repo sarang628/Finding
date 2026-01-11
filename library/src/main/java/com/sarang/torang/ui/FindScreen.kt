@@ -1,4 +1,4 @@
-package com.example.screen_finding.ui
+package com.sarang.torang.ui
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement

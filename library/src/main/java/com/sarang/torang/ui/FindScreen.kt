@@ -1,6 +1,7 @@
 package com.sarang.torang.ui
 
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -69,14 +71,30 @@ fun FindScreen(
 
 @Preview
 @Composable
-fun Buttons(modifier : Modifier = Modifier, onZoomIn: () -> Unit = {}, onZoomOut: () -> Unit = {}, onMyLocation : () -> Unit = {} ) {
+fun Buttons(modifier        : Modifier      = Modifier,
+            onZoomIn        : () -> Unit    = {},
+            onZoomOut       : () -> Unit    = {},
+            onMyLocation    : () -> Unit    = {} ) {
     Row(modifier.padding(end = 8.dp )) {
-
-        AssistChip(onZoomIn, label = {Text("+", fontSize = 30.sp)})
+        AssistChip(onClick  = onZoomIn,
+                   border = BorderStroke(width = 1.dp,
+                                         color = Color.Black),
+                   label    = {Text(text = "+",
+                                    color = Color.Black,
+                                    fontSize = 30.sp)})
         Spacer(modifier = Modifier.width(8.dp))
-        AssistChip(onZoomOut, label = { Text("-", fontSize = 30.sp) })
+        AssistChip(onClick  = onZoomOut,
+                   border = BorderStroke(width = 1.dp,
+                                         color = Color.Black),
+                   label    = { Text(text = "-",
+                                     color = Color.Black,
+                                     fontSize = 30.sp) })
         Spacer(modifier = Modifier.width(8.dp))
-        AssistChip(onMyLocation, label = { Icon(Icons.Default.LocationOn, "") })
+        AssistChip(onClick  = onMyLocation,
+                   border   = BorderStroke(width = 1.dp,
+                                           color = Color.Black),
+                   label    = { Icon(imageVector = Icons.Default.LocationOn,
+                                     contentDescription = "") })
     }
 }
 

@@ -1,4 +1,4 @@
-package com.sarang.torang.ui
+package com.sarang.torang.compose.finding
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
@@ -31,14 +31,14 @@ import androidx.compose.ui.unit.sp
  * @param restaurantCardPage 음식점 카드 페이지
  * @param mapScreen 맵
  * @param filter 필터
- * @param myLocation 내 위치 버튼
  * @param buttonBottomPadding 하단 패딩
  * @param onMyLocation 내 위치 클릭
  */
+
+private const val tag = "__FindScreen"
 @Composable
 fun FindScreen(
-    modifier                         : Modifier                  = Modifier.fillMaxSize(),
-    tag                              : String                    = "__FindScreen",
+    modifier                         : Modifier                  = Modifier,
     buttonBottomPadding              : Dp                        = 24.dp,
     onZoomIn                         : () -> Unit                = { Log.i(tag, "onZoomIn isn't set") },
     onZoomOut                        : () -> Unit                = { Log.i(tag, "onZoomOut isn't set") },

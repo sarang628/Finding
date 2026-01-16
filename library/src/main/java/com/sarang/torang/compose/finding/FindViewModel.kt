@@ -1,4 +1,4 @@
-package com.sarang.torang.viewmodel
+package com.sarang.torang.compose.finding
 
 import android.location.Location
 import android.util.Log
@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.torang.data.finding.FindingFilter
 import com.sarang.torang.data.finding.RestaurantInfo
-import com.sarang.torang.uistate.FindUiState
 import com.sarang.torang.usecase.SearchByKeywordUseCase
 import com.sarang.torang.usecase.SearchThisAreaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

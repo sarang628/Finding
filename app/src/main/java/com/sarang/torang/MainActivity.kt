@@ -12,7 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.di.finding_di.findingWithPermission
+import com.sarang.torang.di.finding_di.FindScreen
 import com.sarang.torang.di.restaurant_list_bottom_sheet_di.CustomRestaurantItemImageLoader
 import com.sryang.library.compose.workflow.BestPracticeViewModel
 import com.sryang.torang.ui.TorangTheme
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                         composable("finding") {
                             CompositionLocalProvider(LocalRestaurantItemImageLoader provides CustomRestaurantItemImageLoader) {
                                 Box {
-                                    findingWithPermission(
+                                    FindScreen(
                                         viewModel = BestPracticeViewModel()
                                     ).invoke()
                                 }

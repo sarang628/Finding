@@ -33,3 +33,5 @@ git submodule add https://github.com/sarang628/TorangToml
 # Tech Stack
 - JetpackCompose
 - Android App Architecture
+  - UILayer
+  - DomainLayer

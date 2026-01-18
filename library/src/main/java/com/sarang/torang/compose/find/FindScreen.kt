@@ -25,17 +25,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/**
- * @param onZoomIn 줌인 클릭
- * @param onZoomOut 줌아웃 클릭
- * @param restaurantCardPage 음식점 카드 페이지
- * @param mapScreen 맵
- * @param filter 필터
- * @param buttonBottomPadding 하단 패딩
- * @param onMyLocation 내 위치 클릭
- */
-
 private const val tag = "__FindScreen"
+
 @Composable
 fun Find(
     modifier                         : Modifier                  = Modifier,

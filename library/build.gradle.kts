@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-android")
     id("kotlin-kapt")
-    //id("com.google.devtools.ksp")
     alias(libs.plugins.hilt)
     id("maven-publish")
     id("kotlinx-serialization")

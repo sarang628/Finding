@@ -28,3 +28,8 @@ git submodule add https://github.com/sarang628/map_di.git
 git submodule add https://github.com/sarang628/cardinfo_di.git
 git submodule add https://github.com/sarang628/TorangToml
 ```
+
+
+# Tech Stack
+- JetpackCompose
+- Android App Architecture

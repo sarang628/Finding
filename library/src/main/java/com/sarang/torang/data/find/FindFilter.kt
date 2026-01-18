@@ -1,6 +1,6 @@
-package com.sarang.torang.data.finding
+package com.sarang.torang.data.find
 
-data class FindingFilter(
+data class FindFilter(
     var searchType: String = "AROUND",
     var keyword: String? = null,
     var distances: String? = null,

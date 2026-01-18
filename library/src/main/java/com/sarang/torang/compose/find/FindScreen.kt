@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.finding
+package com.sarang.torang.compose.find
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.sp
 
 private const val tag = "__FindScreen"
 @Composable
-fun FindScreen(
+fun Find(
     modifier                         : Modifier                  = Modifier,
     buttonBottomPadding              : Dp                        = 24.dp,
     onZoomIn                         : () -> Unit                = { Log.i(tag, "onZoomIn isn't set") },
@@ -48,7 +48,7 @@ fun FindScreen(
     onChangeRestaurantCardPageHeight : (Int) -> Unit             = { Log.i(tag, "onChangeRestaurantCardPageHeight isn't set") },
     onMyLocation                     : () -> Unit                = { Log.i(tag, "onMyLocation isn't set") },
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = modifier.fillMaxSize()) {
         mapScreen.invoke()  // 지도화면
         filter.invoke()     // 필터화면
         Column(
@@ -94,12 +94,13 @@ fun Buttons(modifier        : Modifier      = Modifier,
                    border   = BorderStroke(width = 1.dp,
                                            color = Color.Black),
                    label    = { Icon(imageVector = Icons.Default.LocationOn,
+                                     tint = Color.Black,
                                      contentDescription = "") })
     }
 }
 
 @Preview
 @Composable
-fun PreviewFindingScreen(){
-    FindScreen()
+fun PreviewFind(){
+    Find()
 }

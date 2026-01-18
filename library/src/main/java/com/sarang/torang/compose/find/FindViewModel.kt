@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.finding
+package com.sarang.torang.compose.find
 
 import android.location.Location
 import android.util.Log
@@ -7,10 +7,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sarang.torang.data.finding.FindingFilter
-import com.sarang.torang.data.finding.RestaurantInfo
-import com.sarang.torang.usecase.SearchByKeywordUseCase
-import com.sarang.torang.usecase.SearchThisAreaUseCase
+import com.sarang.torang.data.find.FindFilter
+import com.sarang.torang.data.find.RestaurantInfo
+import com.sarang.torang.usecase.find.SearchByKeywordUseCase
+import com.sarang.torang.usecase.find.SearchThisAreaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,7 +33,7 @@ class FindViewModel @Inject constructor(
         viewModelScope.launch { uiState = uiState.copy(currentLocation = location) }
     }
 
-    fun findThisArea(filter: FindingFilter) {
+    fun findThisArea(filter: FindFilter) {
         viewModelScope.launch {
             try {
                 searchThisAreaUseCase.invoke(filter = filter)
@@ -44,7 +44,7 @@ class FindViewModel @Inject constructor(
     fun clearErrorMessage() { uiState =  uiState.popErrorMessage() }
     fun findPositionByRestaurantId(restaurantId: Int): RestaurantInfo? { return null }
 
-    fun onSearch(it: FindingFilter) {
+    fun onSearch(it: FindFilter) {
         viewModelScope.launch {
             try {
                 val result = searchByKeywordUseCase.invoke(it)

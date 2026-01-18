@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.finding
+package com.sarang.torang.compose.find
 
 import android.location.Location
 
